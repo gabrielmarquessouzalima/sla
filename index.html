@@ -3,13 +3,21 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minha Primeira Página</title>
+    <title>Minha Primeira Página Espacial</title>
     <style>
         body {
-            /* O degradê começa no azul e termina em um roxo bem escuro (#2e004d) */
-            background: linear-gradient(to bottom, rgb(0, 11, 94), #2e004d);
+            /* Criamos camadas: primeiro as estrelas (transparentes) e por baixo o degradê azul/roxo */
+            background: 
+                radial-gradient(1px 1px at 20px 30px, white, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 40px 70px, white, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 50px 160px, white, rgba(0,0,0,0)),
+                radial-gradient(1.5px 1.5px at 90px 40px, white, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 130px 80px, white, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 160px 120px, white, rgba(0,0,0,0)),
+                linear-gradient(to bottom, rgb(0, 16, 135), #2e004d);
             
-            /* Isso garante que o fundo cubra a tela toda mesmo se você rolar a página */
+            /* Define o tamanho do "bloco" de estrelas que vai se repetir */
+            background-size: 200px 200px, 200px 200px, 200px 200px, 200px 200px, 200px 200px, 200px 200px, 100% 100%;
             background-attachment: fixed; 
             
             margin: 0;
@@ -19,7 +27,7 @@
             justify-content: center;
             min-height: 100vh;
             font-family: sans-serif;
-            color: white; /* Cor branca para o nome Gabriel aparecer melhor no fundo escuro */
+            color: white;
         }
 
         .meu-gif {
@@ -27,20 +35,21 @@
             height: auto;
             border-radius: 10px;
             margin-top: 20px;
-            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
+            /* Um brilho externo (Glow) para o GIF combinar com o espaço */
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
         }
 
         h1 {
             margin: 5px 0;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
         }
 
         .texto-vermelho {
-            color: red;
+            color: #ff3333;
             font-size: 50px;
             margin: 10px 0;
             text-transform: uppercase;
-            /* Adicionei uma sombra para o texto vermelho não "sumir" no azul/roxo */
-            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+            text-shadow: 0 0 15px rgba(255, 0, 0, 0.7); /* Efeito neon */
         }
     </style>
 </head>
