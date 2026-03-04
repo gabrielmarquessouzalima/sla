@@ -6,50 +6,50 @@
     <title>Minha Primeira Página</title>
     <style>
         body {
-            background-color: rgb(0, 16, 135);
+            /* O degradê começa no azul e termina em um roxo bem escuro (#2e004d) */
+            background: linear-gradient(to bottom, rgb(0, 16, 135), #2e004d);
+            
+            /* Isso garante que o fundo cubra a tela toda mesmo se você rolar a página */
+            background-attachment: fixed; 
+            
             margin: 0;
             display: flex;
-            flex-direction: column; /* Coloca os itens um embaixo do outro */
-            align-items: center;    /* Centraliza horizontalmente */
-            justify-content: center; /* Centraliza verticalmente na tela */
-            min-height: 100vh;      /* Garante que o corpo ocupe a altura toda */
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
             font-family: sans-serif;
+            color: white; /* Cor branca para o nome Gabriel aparecer melhor no fundo escuro */
         }
 
         .meu-gif {
-            width: 300px; /* Aqui você controla o tamanho do GIF */
+            width: 300px;
             height: auto;
             border-radius: 10px;
             margin-top: 20px;
-            box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+            box-shadow: 0 4px 20px rgba(0,0,0,0.5);
         }
 
         h1 {
             margin: 5px 0;
         }
+
+        .texto-vermelho {
+            color: red;
+            font-size: 50px;
+            margin: 10px 0;
+            text-transform: uppercase;
+            /* Adicionei uma sombra para o texto vermelho não "sumir" no azul/roxo */
+            text-shadow: 2px 2px 4px rgba(0,0,0,0.5);
+        }
     </style>
 </head>
 <body>
 
-<style>
-    /* ... seus outros estilos ... */
-    
-    .texto-vermelho {
-        color: red;
-        font-size: 50px; /* Aqui você controla o "gigantismo" do texto */
-        margin: 10px 0;
-        text-transform: uppercase; /* Opcional: deixa tudo em MAIÚSCULO */
-    }
-</style>
-
-<body>
     <h1>Gabriel</h1>
     <h1 class="texto-vermelho">hello world!</h1>
-    
-    </body>
-</style>
 
-    <img src=https://media1.tenor.com/m/h1avbRkVQFIAAAAC/butcher-vanity-vane-lily.gif
+    <img src="https://media1.tenor.com/m/h1avbRkVQFIAAAAC/butcher-vanity-vane-lily.gif" 
          alt="Butcher Vanity" 
          class="meu-gif">
 
