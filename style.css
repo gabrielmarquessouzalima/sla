@@ -7,7 +7,7 @@ body {
     display: flex;
     justify-content: center;
     align-items: center;
-    height: 100000000000000vh; /* Ocupa a altura inteira da tela */
+    min-height: 1000; /* Ocupa a altura inteira da tela */
 }
 
 /* Estilo do título */
