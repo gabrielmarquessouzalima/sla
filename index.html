@@ -1,65 +1,125 @@
 <!DOCTYPE html>
+
 <html lang="pt-br">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Minha Primeira Página Espacial</title>
+
     <style>
+
         body {
-            /* Estrelas e degradê */
-            background: 
+
+            /* Criamos camadas: primeiro as estrelas (transparentes) e por baixo o degradê azul/roxo */
+
+            background:
+
                 radial-gradient(1px 1px at 20px 30px, white, rgba(0,0,0,0)),
+
                 radial-gradient(1px 1px at 40px 70px, white, rgba(0,0,0,0)),
+
                 radial-gradient(2px 2px at 50px 160px, white, rgba(0,0,0,0)),
+
                 radial-gradient(1.5px 1.5px at 90px 40px, white, rgba(0,0,0,0)),
+
                 radial-gradient(1px 1px at 130px 80px, white, rgba(0,0,0,0)),
+
                 radial-gradient(1px 1px at 160px 120px, white, rgba(0,0,0,0)),
+
                 linear-gradient(to bottom, rgb(0, 16, 135), #2e004d);
-            
+
+           
+
+            /* Define o tamanho do "bloco" de estrelas que vai se repetir */
+
             background-size: 200px 200px, 200px 200px, 200px 200px, 200px 200px, 200px 200px, 200px 200px, 100% 100%;
+
             background-attachment: fixed;
-            
+
+           
+
             margin: 0;
+
             display: flex;
+
             flex-direction: column;
+
             align-items: center;
+
             justify-content: center;
+
             min-height: 100vh;
+
             font-family: sans-serif;
+
             color: white;
-            overflow: hidden; /* Garante que nada saia das bordas */
-            position: relative;
+
         }
 
-        /* CONFIGURAÇÃO DO RAYQUAZA DISTANTE */
-        .rayquaza-fundo {
-            position: absolute;
-            right: 5%;          /* Distância da borda direita */
-            bottom: 20%;        /* Distância do fundo */
-            width: 80px;        /* Tamanho pequeno para parecer longe */
-            opacity: 0.5;       /* Opacidade baixa para parecer que há atmosfera/distância */
-            z-index: -1;        /* Coloca ele atrás do texto e do Butcher */
-            filter: blur(1px);  /* Um leve desfoque para reforçar a distância */
-            pointer-events: none; /* Ignora cliques para não atrapalhar */
-        }
 
         .meu-gif {
+
             width: 300px;
+
             height: auto;
+
             border-radius: 10px;
+
             margin-top: 20px;
+
+            /* Um brilho externo (Glow) para o GIF combinar com o espaço */
+
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-            z-index: 1;
+
         }
+
 
         h1 {
+
             margin: 5px 0;
+
             text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
-            z-index: 1;
+
         }
 
+
         .texto-vermelho {
+
             color: #ff3333;
+
             font-size: 50px;
+
             margin: 10px 0;
+
             text-transform: uppercase;
+
+            text-shadow: 0 0 15px rgba(255, 0, 0, 0.7); /* Efeito neon */
+
+        }
+
+    </style>
+
+</head>
+
+<body>
+
+
+    <h1>Gabriel</h1>
+
+    <h1 class="texto-vermelho">hello world!</h1>
+
+
+    <img src="https://media1.tenor.com/m/h1avbRkVQFIAAAAC/butcher-vanity-vane-lily.gif"
+
+         alt="Butcher Vanity"
+
+         class="meu-gif">
+
+
+</body>
+
+</html>
