@@ -34,12 +34,12 @@
         /* CONFIGURAÇÃO DO RAYQUAZA DISTANTE */
         .rayquaza-fundo {
             position: absolute;
-            top: 5%;            /* Fica na parte de cima */
-            right: 8%;          /* No lado direito */
-            width: 60px;        /* Tamanho pequeno para parecer longe */
-            opacity: 0.4;       /* Bem clarinho para simular distância */
-            z-index: -1;        /* Fica atrás de tudo */
-            filter: blur(1.5px); /* Desfocado para parecer que está a quilômetros de distância */
+            top: 8%;            /* No topo */
+            right: 18%;         /* Movido um pouco mais para o centro (esquerda) */
+            width: 70px;        /* Pequeno para parecer longe */
+            opacity: 0.5;       /* Sutil no fundo */
+            z-index: -1;        /* Atrás do texto */
+            filter: blur(1px);  /* Leve desfoque de distância */
             pointer-events: none;
         }
 
@@ -69,7 +69,7 @@
 </head>
 <body>
 
-    <img src="https://projectpokemon.org/images/shiny-sprites/rayquaza.gif" 
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/384.gif" 
          alt="Rayquaza Distante" 
          class="rayquaza-fundo">
 
