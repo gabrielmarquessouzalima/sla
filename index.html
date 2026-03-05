@@ -27,20 +27,20 @@
             min-height: 100vh;
             font-family: sans-serif;
             color: white;
-            overflow: hidden; /* Garante que nada saia das bordas */
+            overflow: hidden; 
             position: relative;
         }
 
         /* CONFIGURAÇÃO DO RAYQUAZA DISTANTE */
         .rayquaza-fundo {
             position: absolute;
-            right: 5%;          /* Distância da borda direita */
-            bottom: 20%;        /* Distância do fundo */
-            width: 80px;        /* Tamanho pequeno para parecer longe */
-            opacity: 0.5;       /* Opacidade baixa para parecer que há atmosfera/distância */
-            z-index: -1;        /* Coloca ele atrás do texto e do Butcher */
-            filter: blur(1px);  /* Um leve desfoque para reforçar a distância */
-            pointer-events: none; /* Ignora cliques para não atrapalhar */
+            top: 5%;            /* Fica na parte de cima */
+            right: 8%;          /* No lado direito */
+            width: 60px;        /* Tamanho pequeno para parecer longe */
+            opacity: 0.4;       /* Bem clarinho para simular distância */
+            z-index: -1;        /* Fica atrás de tudo */
+            filter: blur(1.5px); /* Desfocado para parecer que está a quilômetros de distância */
+            pointer-events: none;
         }
 
         .meu-gif {
@@ -69,9 +69,9 @@
 </head>
 <body>
 
-    <img src=https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcRmENQTVsjcLYyhsu3DSnYD7LN-4gLf7UDo-g&s
+    <img src="https://projectpokemon.org/images/shiny-sprites/rayquaza.gif" 
          alt="Rayquaza Distante" 
-         class="meu-gif">
+         class="rayquaza-fundo">
 
     <h1>Gabriel</h1>
     <h1 class="texto-vermelho">hello world!</h1>
