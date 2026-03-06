@@ -3,8 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Minha Primeira Página Espacial</title>
+    <title>Espaço do Gabriel</title>
     <style>
+        /* Estilos da Tela de Entrada (Overlay) */
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: black;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            transition: opacity 1s ease;
+        }
+
+        #btn-entrar {
+            padding: 15px 30px;
+            font-size: 20px;
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+            cursor: pointer;
+            font-family: 'Courier New', Courier, monospace;
+            border-radius: 5px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+        }
+
+        #btn-entrar:hover {
+            background: white;
+            color: black;
+        }
+
+        /* Seu estilo original */
         body {
             background: 
                 radial-gradient(1px 1px at 20px 30px, white, rgba(0,0,0,0)),
@@ -17,7 +51,6 @@
             
             background-size: 200px 200px, 200px 200px, 200px 200px, 200px 200px, 200px 200px, 200px 200px, 100% 100%;
             background-attachment: fixed;
-            
             margin: 0;
             display: flex;
             flex-direction: column;
@@ -38,7 +71,6 @@
             opacity: 0.5;
             z-index: -1;
             filter: blur(1px);
-            pointer-events: none;
         }
 
         .mimikyu-topo {
@@ -73,41 +105,50 @@
             text-shadow: 0 0 15px rgba(255, 0, 0, 0.7);
         }
 
-        /* Esconde o player */
-        .video-musica {
-            position: absolute;
-            width: 0;
-            height: 0;
-            border: none;
-            visibility: hidden;
+        iframe {
+            display: none;
         }
     </style>
 </head>
 <body>
 
-    <iframe class="video-musica" 
-        src="https://www.youtube.com/embed/iymkhH754bo?autoplay=1&loop=1&playlist=iymkhH754bo&controls=0&disablekb=1" 
-        allow="autoplay">
-    </iframe>
+    <div id="overlay">
+        <button id="btn-entrar">ENTRAR NO ESPAÇO</button>
+    </div>
+
+    <div id="player-container"></div>
 
     <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/384.gif" 
-         alt="Rayquaza" 
-         class="rayquaza-fundo">
+         alt="Rayquaza" class="rayquaza-fundo">
 
     <h1>Gabriel</h1>
 
     <img src="https://media.tenor.com/dBsHOlc6L30AAAAj/mimikyu.gif" 
-         alt="Mimikyu" 
-         class="mimikyu-topo">
+         alt="Mimikyu" class="mimikyu-topo">
 
     <h1 class="texto-vermelho">hello world!</h1>
 
     <img src="https://media1.tenor.com/m/h1avbRkVQFIAAAAC/butcher-vanity-vane-lily.gif"
-         alt="Butcher Vanity"
-         class="meu-gif">
+         alt="Butcher Vanity" class="meu-gif">
 
-    <p style="font-size: 11px; opacity: 0.5; margin-top: 20px; font-style: italic;">
-    </p>
+    <script>
+        const overlay = document.getElementById('overlay');
+        const btn = document.getElementById('btn-entrar');
+        const playerContainer = document.getElementById('player-container');
+
+        btn.addEventListener('click', () => {
+            // 1. Esconde a tela preta
+            overlay.style.opacity = '0';
+            setTimeout(() => overlay.style.display = 'none', 1000);
+
+            // 2. Cria o player de música (YouTube Looping)
+            playerContainer.innerHTML = `
+                <iframe 
+                    src="https://www.youtube.com/embed/iymkhH754bo?autoplay=1&loop=1&playlist=iymkhH754bo" 
+                    allow="autoplay">
+                </iframe>`;
+        });
+    </script>
 
 </body>
 </html>
