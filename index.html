@@ -1,95 +1,178 @@
-<!DOCTYPE html>
+ <!DOCTYPE html>
+
 <html lang="pt-br">
+
 <head>
+
     <meta charset="UTF-8">
+
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
     <title>Minha Primeira Página Espacial</title>
+
     <style>
+
         body {
-            background: 
+
+            background:
+
                 radial-gradient(1px 1px at 20px 30px, white, rgba(0,0,0,0)),
+
                 radial-gradient(1px 1px at 40px 70px, white, rgba(0,0,0,0)),
+
                 radial-gradient(2px 2px at 50px 160px, white, rgba(0,0,0,0)),
+
                 radial-gradient(1.5px 1.5px at 90px 40px, white, rgba(0,0,0,0)),
+
                 radial-gradient(1px 1px at 130px 80px, white, rgba(0,0,0,0)),
+
                 radial-gradient(1px 1px at 160px 120px, white, rgba(0,0,0,0)),
+
                 linear-gradient(to bottom, rgb(0, 16, 135), #2e004d);
-            
+
+           
+
             background-size: 200px 200px, 200px 200px, 200px 200px, 200px 200px, 200px 200px, 200px 200px, 100% 100%;
+
             background-attachment: fixed;
-            
+
+           
+
             margin: 0;
+
             display: flex;
+
             flex-direction: column;
+
             align-items: center;
+
             justify-content: center;
+
             min-height: 100vh;
+
             font-family: sans-serif;
+
             color: white;
-            overflow: hidden; 
+
+            overflow: hidden;
+
             position: relative;
+
         }
+
 
         .rayquaza-fundo {
+
             position: absolute;
+
             top: 8%;
+
             right: 18%;
+
             width: 70px;
+
             opacity: 0.5;
+
             z-index: -1;
+
             filter: blur(1px);
+
             pointer-events: none;
+
         }
+
 
         /* Estilo para o Mimikyu */
+
         .mimikyu {
+
             width: 120px; /* Ajustei um pouco o tamanho */
+
             height: auto;
+
             margin-bottom: -15px; /* Deixa ele "pisando" no Hello World */
+
             z-index: 2;
+
         }
+
 
         .meu-gif {
+
             width: 300px;
+
             height: auto;
+
             border-radius: 10px;
+
             margin-top: 20px;
+
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+
             z-index: 1;
+
         }
+
 
         h1 {
+
             margin: 5px 0;
+
             text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
+
             z-index: 1;
+
         }
+
 
         .texto-vermelho {
+
             color: #ff3333;
+
             font-size: 50px;
-            margin: 0; 
+
+            margin: 0;
+
             text-transform: uppercase;
+
             text-shadow: 0 0 15px rgba(255, 0, 0, 0.7);
+
         }
+
     </style>
+
 </head>
+
 <body>
 
-    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/384.gif" 
-         alt="Rayquaza" 
+
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/384.gif"
+
+         alt="Rayquaza"
+
          class="rayquaza-fundo">
+
 
     <h1>Gabriel</h1>
 
+
    <img src="https://www.google.com/url?sa=t&source=web&rct=j&url=https%3A%2F%2Ftenor.com%2Fview%2Fmimikyu-gif-8366288679923756925&opi=89978449"
-     alt="Mimikyu" 
+
+     alt="Mimikyu"
+
      class="mimikyu">
+
 
     <h1 class="texto-vermelho">hello world!</h1>
 
+
     <img src="https://media1.tenor.com/m/h1avbRkVQFIAAAAC/butcher-vanity-vane-lily.gif"
+
          alt="Butcher Vanity"
+
          class="meu-gif">
 
+
 </body>
+
 </html>
