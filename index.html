@@ -73,20 +73,20 @@
             text-shadow: 0 0 15px rgba(255, 0, 0, 0.7);
         }
 
-        /* Isso aqui esconde o vídeo da música */
+        /* Esconde o player */
         .video-musica {
             position: absolute;
             width: 0;
             height: 0;
             border: none;
-            pointer-events: none;
+            visibility: hidden;
         }
     </style>
 </head>
 <body>
 
     <iframe class="video-musica" 
-        src="https://www.youtube.com/embed/iymkhH754bo?autoplay=1&loop=1&playlist=iymkhH754bo" 
+        src="https://www.youtube.com/embed/iymkhH754bo?autoplay=1&loop=1&playlist=iymkhH754bo&controls=0&disablekb=1" 
         allow="autoplay">
     </iframe>
 
@@ -106,7 +106,9 @@
          alt="Butcher Vanity"
          class="meu-gif">
 
-    <p style="font-size: 10px; opacity: 0.4; margin-top: 15px;">(Clique na tela para tocar a música)</p>
+    <p style="font-size: 11px; opacity: 0.5; margin-top: 20px; font-style: italic;">
+        (Dê um clique na página para ativar o som)
+    </p>
 
 </body>
 </html>
