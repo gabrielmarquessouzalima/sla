@@ -71,24 +71,24 @@
             text-shadow: 0 0 15px rgba(255, 0, 0, 0.7);
         }
 
-        /* ESTILO NOVO APENAS PARA OS SONICS NA BORDA */
-        .area-corrida {
+        /* --- SÓ ADICIONEI DAQUI PARA BAIXO --- */
+        .container-sonics {
             position: fixed;
             bottom: 0;
             width: 100%;
             pointer-events: none;
         }
 
-        .sonics-juntos {
+        .os-dois-sonics {
             position: absolute;
             display: flex;
-            gap: 10px; /* Distância entre um e outro */
-            animation: correrTela 5s linear infinite;
+            gap: 20px; /* Isso deixa um atrás do outro */
+            animation: correr 5s linear infinite;
         }
 
-        @keyframes correrTela {
+        @keyframes correr {
             from { left: 100%; }
-            to { left: -250px; }
+            to { left: -300px; }
         }
     </style>
 </head>
@@ -100,8 +100,8 @@
 
     <h1>Gabriel</h1>
 
-    <img src="https://www.google.com/url?sa=t&source=web&rct=j&url=https%3A%2F%2Ftenor.com%2Fview%2Fmimikyu-gif-8366288679923756925&opi=89978449" 
-         alt="mimikyu" 
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/animated/778.gif" 
+         alt="Mimikyu" 
          class="mimikyu">
 
     <h1 class="texto-vermelho">hello world!</h1>
@@ -110,6 +110,10 @@
          alt="Butcher Vanity"
          class="meu-gif">
 
+    <div class="container-sonics">
+        <div class="os-dois-sonics">
+            <img src="https://media.tenor.com/yS7S9I_K_8AAAAAj/sonic-sonic-the-hedgehog.gif" height="60">
+            <img src="https://media.tenor.com/tHqX17m4_Y8AAAAi/sonic.gif" height="60">
         </div>
     </div>
 
