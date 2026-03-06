@@ -41,10 +41,11 @@
             pointer-events: none;
         }
 
+        /* Estilo para o Mimikyu */
         .mimikyu {
             width: 120px;
             height: auto;
-            margin-bottom: -15px;
+            margin-bottom: -15px; /* Deixa ele "pisando" no Hello World */
             z-index: 2;
         }
 
@@ -70,26 +71,6 @@
             text-transform: uppercase;
             text-shadow: 0 0 15px rgba(255, 0, 0, 0.7);
         }
-
-        /* --- SÓ ADICIONEI DAQUI PARA BAIXO --- */
-        .container-sonics {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            pointer-events: none;
-        }
-
-        .os-dois-sonics {
-            position: absolute;
-            display: flex;
-            gap: 20px; /* Isso deixa um atrás do outro */
-            animation: correr 5s linear infinite;
-        }
-
-        @keyframes correr {
-            from { left: 100%; }
-            to { left: -300px; }
-        }
     </style>
 </head>
 <body>
@@ -100,8 +81,8 @@
 
     <h1>Gabriel</h1>
 
-    <img src="https://www.google.com/url?sa=t&source=web&rct=j&url=https%3A%2F%2Ftenor.com%2Fview%2Fmimikyu-gif-8366288679923756925&opi=89978449
-         alt="Mimikyu" 
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/animated/778.gif" 
+         alt="Mimikyu Animado" 
          class="mimikyu">
 
     <h1 class="texto-vermelho">hello world!</h1>
