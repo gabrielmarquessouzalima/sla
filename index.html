@@ -41,6 +41,16 @@
             pointer-events: none;
         }
 
+        /* Estilo para o Mimikyu novo */
+        .mimikyu-topo {
+            width: 80px; /* Tamanho menor como você pediu */
+            height: auto;
+            align-self: flex-end; /* Joga para a direita */
+            margin-right: 25%; /* Ajusta a posição lateral */
+            margin-bottom: -20px; /* Sobrepõe levemente o texto abaixo */
+            z-index: 2;
+        }
+
         .meu-gif {
             width: 300px;
             height: auto;
@@ -51,7 +61,7 @@
         }
 
         h1 {
-            margin: 10px 0; /* Aumentei um pouco a margem já que o Mimikyu saiu */
+            margin: 5px 0;
             text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
             z-index: 1;
         }
@@ -72,6 +82,10 @@
          class="rayquaza-fundo">
 
     <h1>Gabriel</h1>
+
+    <img src="https://media.tenor.com/79_u2v7rT7IAAAAi/mimikyu-pokemon.gif" 
+         alt="Mimikyu" 
+         class="mimikyu-topo">
 
     <h1 class="texto-vermelho">hello world!</h1>
 
