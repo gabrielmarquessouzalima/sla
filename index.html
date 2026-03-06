@@ -30,6 +30,7 @@
             position: relative; 
         } 
 
+        /* Rayquaza ao fundo */
         .rayquaza-fundo { 
             position: absolute; 
             top: 8%; 
@@ -41,6 +42,7 @@
             pointer-events: none; 
         } 
 
+        /* Mimikyu em cima do texto */
         .mimikyu { 
             width: 100px; 
             height: auto; 
@@ -71,63 +73,54 @@
             text-shadow: 0 0 15px rgba(255, 0, 0, 0.7); 
         }
 
-        /* --- ESTILO DA CORRIDA NA BORDA INFERIOR --- */
-        .corrida-container {
+        /* --- CONFIGURAÇÃO DA CORRIDA NO RODAPÉ --- */
+        .pista {
             position: fixed;
             bottom: 0;
-            left: 0;
             width: 100%;
-            height: 100px; /* Altura da "pista" */
+            height: 80px;
             z-index: 100;
             pointer-events: none;
         }
 
-        .corredor {
+        .grupo-corrida {
             position: absolute;
-            bottom: 0;
-            height: 70px; /* Tamanho dos personagens */
+            display: flex;
+            align-items: flex-end;
+            gap: 20px; /* Espaço entre o Sonic e o Sonic.exe */
+            animation: moverTela 6s linear infinite;
+        }
+
+        .corredor-gif {
+            height: 70px; /* Tamanho dos Sonics */
             width: auto;
         }
 
-        @keyframes correr {
-            from { transform: translateX(110vw); } /* Começa fora da tela à direita */
-            to { transform: translateX(-20vw); }   /* Termina fora da tela à esquerda */
-        }
-
-        .sonic {
-            animation: correr 4s linear infinite;
-        }
-
-        .sonic-exe {
-            animation: correr 4s linear infinite;
-            animation-delay: 0.3s; /* Faz o Sonic.exe vir logo atrás */
+        /* Animação para atravessar a tela da direita para a esquerda */
+        @keyframes moverTela {
+            from { right: -300px; }
+            to { right: 100%; }
         }
     </style> 
 </head> 
 <body> 
 
-    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/384.gif"  
-         alt="Rayquaza"  
-         class="rayquaza-fundo"> 
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/384.gif" alt="Rayquaza" class="rayquaza-fundo"> 
 
     <h1>Gabriel</h1> 
 
-    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/animated/778.gif" 
-         alt="Mimikyu"  
-         class="mimikyu"> 
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/animated/778.gif" alt="Mimikyu" class="mimikyu"> 
 
     <h1 class="texto-vermelho">hello world!</h1> 
 
-    <img src="https://media1.tenor.com/m/h1avbRkVQFIAAAAC/butcher-vanity-vane-lily.gif" 
-         alt="Butcher Vanity" 
-         class="meu-gif"> 
+    <img src="https://media1.tenor.com/m/h1avbRkVQFIAAAAC/butcher-vanity-vane-lily.gif" alt="Butcher Vanity" class="meu-gif"> 
 
-    <div class="corrida-container">
-        <img src="https://media.tenor.com/tHqX17m4_Y8AAAAi/sonic.gif" 
-             alt="Sonic" class="corredor sonic">
-        
-        <img src="https://dinopixel.com/pixel-art/sonic-exe-looking-around-if-use-the-original-picture-of-this-gif-do-credit-have-fun-with-this-pixel-art-40299.gif" 
-             alt="Sonic.exe" class="corredor sonic-exe">
+    <div class="pista">
+        <div class="grupo-corrida">
+            <img src="https://media.tenor.com/yS7S9I_K_8AAAAAj/sonic-sonic-the-hedgehog.gif" class="corredor-gif" alt="Sonic EXE">
+            
+            <img src="https://media.tenor.com/tHqX17m4_Y8AAAAi/sonic.gif" class="corredor-gif" alt="Sonic">
+        </div>
     </div>
 
 </body> 
