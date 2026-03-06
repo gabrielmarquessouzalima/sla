@@ -44,7 +44,6 @@
         .mimikyu-topo {
             width: 80px; 
             height: auto;
-            /* Ajuste para ficar em cima do "WORLD" */
             margin-left: 120px; 
             margin-bottom: -25px; 
             z-index: 2;
@@ -73,9 +72,23 @@
             text-transform: uppercase;
             text-shadow: 0 0 15px rgba(255, 0, 0, 0.7);
         }
+
+        /* Isso aqui esconde o vídeo da música */
+        .video-musica {
+            position: absolute;
+            width: 0;
+            height: 0;
+            border: none;
+            pointer-events: none;
+        }
     </style>
 </head>
 <body>
+
+    <iframe class="video-musica" 
+        src="https://www.youtube.com/embed/iymkhH754bo?autoplay=1&loop=1&playlist=iymkhH754bo" 
+        allow="autoplay">
+    </iframe>
 
     <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/384.gif" 
          alt="Rayquaza" 
@@ -92,6 +105,8 @@
     <img src="https://media1.tenor.com/m/h1avbRkVQFIAAAAC/butcher-vanity-vane-lily.gif"
          alt="Butcher Vanity"
          class="meu-gif">
+
+    <p style="font-size: 10px; opacity: 0.4; margin-top: 15px;">(Clique na tela para tocar a música)</p>
 
 </body>
 </html>
