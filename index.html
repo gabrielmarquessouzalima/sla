@@ -31,16 +31,23 @@
             position: relative;
         }
 
-        /* CONFIGURAÇÃO DO RAYQUAZA DISTANTE */
         .rayquaza-fundo {
             position: absolute;
-            top: 8%;            /* No topo */
-            right: 18%;         /* Movido um pouco mais para o centro (esquerda) */
-            width: 70px;        /* Pequeno para parecer longe */
-            opacity: 0.5;       /* Sutil no fundo */
-            z-index: -1;        /* Atrás do texto */
-            filter: blur(1px);  /* Leve desfoque de distância */
+            top: 8%;
+            right: 18%;
+            width: 70px;
+            opacity: 0.5;
+            z-index: -1;
+            filter: blur(1px);
             pointer-events: none;
+        }
+
+        /* Estilo para o Mimikyu */
+        .mimikyu {
+            width: 100px; /* Tamanho do Mimikyu */
+            height: auto;
+            margin-bottom: -10px; /* Puxa o texto um pouco para cima para parecer que ele está em cima */
+            z-index: 1;
         }
 
         .meu-gif {
@@ -61,7 +68,7 @@
         .texto-vermelho {
             color: #ff3333;
             font-size: 50px;
-            margin: 10px 0;
+            margin: 0; /* Removi a margem para o Mimikyu ficar mais próximo */
             text-transform: uppercase;
             text-shadow: 0 0 15px rgba(255, 0, 0, 0.7);
         }
@@ -74,6 +81,11 @@
          class="rayquaza-fundo">
 
     <h1>Gabriel</h1>
+
+    <img src="https://media.tenor.com/7vY6L5S6S_8AAAAC/mimikyu-pokemon.gif" 
+         alt="Mimikyu" 
+         class="mimikyu">
+
     <h1 class="texto-vermelho">hello world!</h1>
 
     <img src="https://media1.tenor.com/m/h1avbRkVQFIAAAAC/butcher-vanity-vane-lily.gif"
