@@ -1,127 +1,121 @@
-<!DOCTYPE html> 
-<html lang="pt-br"> 
-<head> 
-    <meta charset="UTF-8"> 
-    <meta name="viewport" content="width=device-width, initial-scale=1.0"> 
-    <title>Minha Primeira Página Espacial</title> 
-    <style> 
-        body { 
-            background:  
-                radial-gradient(1px 1px at 20px 30px, white, rgba(0,0,0,0)), 
-                radial-gradient(1px 1px at 40px 70px, white, rgba(0,0,0,0)), 
-                radial-gradient(2px 2px at 50px 160px, white, rgba(0,0,0,0)), 
-                radial-gradient(1.5px 1.5px at 90px 40px, white, rgba(0,0,0,0)), 
-                radial-gradient(1px 1px at 130px 80px, white, rgba(0,0,0,0)), 
-                radial-gradient(1px 1px at 160px 120px, white, rgba(0,0,0,0)), 
-                linear-gradient(to bottom, rgb(0, 16, 135), #2e004d); 
-             
-            background-size: 200px 200px, 200px 200px, 200px 200px, 200px 200px, 200px 200px, 200px 200px, 100% 100%; 
-            background-attachment: fixed; 
-             
-            margin: 0; 
-            display: flex; 
-            flex-direction: column; 
-            align-items: center; 
-            justify-content: center; 
-            min-height: 100vh; 
-            font-family: sans-serif; 
-            color: white; 
-            overflow: hidden;  
-            position: relative; 
-        } 
-
-        /* Rayquaza ao fundo */
-        .rayquaza-fundo { 
-            position: absolute; 
-            top: 8%; 
-            right: 18%; 
-            width: 70px; 
-            opacity: 0.5; 
-            z-index: -1; 
-            filter: blur(1px); 
-            pointer-events: none; 
-        } 
-
-        /* Mimikyu em cima do texto */
-        .mimikyu { 
-            width: 100px; 
-            height: auto; 
-            margin-bottom: -15px; 
-            z-index: 2; 
-        } 
-
-        .meu-gif { 
-            width: 300px; 
-            height: auto; 
-            border-radius: 10px; 
-            margin-top: 20px; 
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3); 
-            z-index: 1; 
-        } 
-
-        h1 { 
-            margin: 5px 0; 
-            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8); 
-            z-index: 1; 
-        } 
-
-        .texto-vermelho { 
-            color: #ff3333; 
-            font-size: 50px; 
-            margin: 0;  
-            text-transform: uppercase; 
-            text-shadow: 0 0 15px rgba(255, 0, 0, 0.7); 
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Minha Primeira Página Espacial</title>
+    <style>
+        body {
+            background: 
+                radial-gradient(1px 1px at 20px 30px, white, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 40px 70px, white, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 50px 160px, white, rgba(0,0,0,0)),
+                radial-gradient(1.5px 1.5px at 90px 40px, white, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 130px 80px, white, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 160px 120px, white, rgba(0,0,0,0)),
+                linear-gradient(to bottom, rgb(0, 16, 135), #2e004d);
+            
+            background-size: 200px 200px, 200px 200px, 200px 200px, 200px 200px, 200px 200px, 200px 200px, 100% 100%;
+            background-attachment: fixed;
+            
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            font-family: sans-serif;
+            color: white;
+            overflow: hidden; 
+            position: relative;
         }
 
-        /* --- CONFIGURAÇÃO DA CORRIDA NO RODAPÉ --- */
-        .pista {
-            position: fixed;
-            bottom: 0;
-            width: 100%;
-            height: 80px;
-            z-index: 100;
+        .rayquaza-fundo {
+            position: absolute;
+            top: 8%;
+            right: 18%;
+            width: 70px;
+            opacity: 0.5;
+            z-index: -1;
+            filter: blur(1px);
             pointer-events: none;
         }
 
-        .grupo-corrida {
+        .mimikyu {
+            width: 120px;
+            height: auto;
+            margin-bottom: -15px;
+            z-index: 2;
+        }
+
+        .meu-gif {
+            width: 300px;
+            height: auto;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            z-index: 1;
+        }
+
+        h1 {
+            margin: 5px 0;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
+            z-index: 1;
+        }
+
+        .texto-vermelho {
+            color: #ff3333;
+            font-size: 50px;
+            margin: 0; 
+            text-transform: uppercase;
+            text-shadow: 0 0 15px rgba(255, 0, 0, 0.7);
+        }
+
+        /* ESTILO NOVO APENAS PARA OS SONICS NA BORDA */
+        .area-corrida {
+            position: fixed;
+            bottom: 0;
+            width: 100%;
+            pointer-events: none;
+        }
+
+        .sonics-juntos {
             position: absolute;
             display: flex;
-            align-items: flex-end;
-            gap: 20px; /* Espaço entre o Sonic e o Sonic.exe */
-            animation: moverTela 6s linear infinite;
+            gap: 10px; /* Distância entre um e outro */
+            animation: correrTela 5s linear infinite;
         }
 
-        .corredor-gif {
-            height: 70px; /* Tamanho dos Sonics */
-            width: auto;
+        @keyframes correrTela {
+            from { left: 100%; }
+            to { left: -250px; }
         }
+    </style>
+</head>
+<body>
 
-        /* Animação para atravessar a tela da direita para a esquerda */
-        @keyframes moverTela {
-            from { right: -300px; }
-            to { right: 100%; }
-        }
-    </style> 
-</head> 
-<body> 
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/384.gif" 
+         alt="Rayquaza" 
+         class="rayquaza-fundo">
 
-    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/384.gif" alt="Rayquaza" class="rayquaza-fundo"> 
+    <h1>Gabriel</h1>
 
-    <h1>Gabriel</h1> 
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/animated/778.gif" 
+         alt="Mimikyu" 
+         class="mimikyu">
 
-    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/other/showdown/animated/778.gif" alt="Mimikyu" class="mimikyu"> 
+    <h1 class="texto-vermelho">hello world!</h1>
 
-    <h1 class="texto-vermelho">hello world!</h1> 
+    <img src="https://media1.tenor.com/m/h1avbRkVQFIAAAAC/butcher-vanity-vane-lily.gif"
+         alt="Butcher Vanity"
+         class="meu-gif">
 
-    <img src="https://media1.tenor.com/m/h1avbRkVQFIAAAAC/butcher-vanity-vane-lily.gif" alt="Butcher Vanity" class="meu-gif"> 
-
-    <div class="pista">
-        <div class="grupo-corrida">
-            <img src="https://media.tenor.com/yS7S9I_K_8AAAAAj/sonic-sonic-the-hedgehog.gif" class="corredor-gif" alt="Sonic EXE">
-            
-            <img src="https://media.tenor.com/tHqX17m4_Y8AAAAi/sonic.gif" class="corredor-gif" alt="Sonic">
+    <div class="area-corrida">
+        <div class="sonics-juntos">
+            <img src="https://media.tenor.com/tHqX17m4_Y8AAAAi/sonic.gif" height="60">
+            <img src="https://media.tenor.com/yS7S9I_K_8AAAAAj/sonic-sonic-the-hedgehog.gif" height="60">
         </div>
     </div>
 
-</body> 
+</body>
 </html>
