@@ -1,105 +1,154 @@
-<canvas id="chuva"></canvas>
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Espaço do Gabriel</title>
+    <style>
+        /* Estilos da Tela de Entrada (Overlay) */
+        #overlay {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: black;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            z-index: 100;
+            transition: opacity 1s ease;
+        }
 
-<style>
-    /* ... seus estilos anteriores ... */
+        #btn-entrar {
+            padding: 15px 30px;
+            font-size: 20px;
+            background: transparent;
+            color: white;
+            border: 2px solid white;
+            cursor: pointer;
+            font-family: 'Courier New', Courier, monospace;
+            border-radius: 5px;
+            box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
+        }
 
-    #chuva {
-        position: fixed;
-        top: 0;
-        left: 0;
-        width: 100%;
-        height: 100%;
-        z-index: 0; /* Fica atrás do texto, mas acima do fundo */
-        pointer-events: none; /* Não atrapalha os cliques */
-    }
-</style>
+        #btn-entrar:hover {
+            background: white;
+            color: black;
+        }
 
-<script>
-    const overlay = document.getElementById('overlay');
-    const btn = document.getElementById('btn-entrar');
-    const playerContainer = document.getElementById('player-container');
-    const canvas = document.getElementById('chuva');
-    const ctx = canvas.getContext('2d');
-
-    let gotas = [];
-    const numGotas = 150;
-
-    // Redimensionar canvas
-    function resize() {
-        canvas.width = window.innerWidth;
-        canvas.height = window.innerHeight;
-    }
-    window.addEventListener('resize', resize);
-    resize();
-
-    // Criar gota com perspectiva
-    function criarGota() {
-        return {
-            x: Math.random() * canvas.width - canvas.width / 2,
-            y: Math.random() * canvas.height - canvas.height / 2,
-            z: Math.random() * 1000, // Profundidade
-            vel: 15 // Velocidade da queda
-        };
-    }
-
-    // Inicializar gotas
-    for (let i = 0; i < numGotas; i++) {
-        gotas.push(criarGota());
-    }
-
-    function animarChuva() {
-        ctx.clearRect(0, 0, canvas.width, canvas.height);
-        
-        const centerX = canvas.width / 2;
-        const centerY = canvas.height / 2;
-
-        gotas.forEach(g => {
-            // Movimenta a gota em nossa direção (eixo Z)
-            g.z -= g.vel;
-
-            // Se a gota passar da tela, reseta ela lá no fundo
-            if (g.z <= 0) {
-                g.z = 1000;
-                g.x = Math.random() * canvas.width - canvas.width / 2;
-                g.y = Math.random() * canvas.height - canvas.height / 2;
-            }
-
-            // Projeção 3D para 2D
-            const fov = 400; // Campo de visão
-            const scale = fov / (fov + g.z);
-            const x2d = g.x * scale + centerX;
-            const y2d = g.y * scale + centerY;
+        /* Seu estilo original */
+        body {
+            background: 
+                radial-gradient(1px 1px at 20px 30px, white, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 40px 70px, white, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 50px 160px, white, rgba(0,0,0,0)),
+                radial-gradient(1.5px 1.5px at 90px 40px, white, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 130px 80px, white, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 160px 120px, white, rgba(0,0,0,0)),
+                linear-gradient(to bottom, rgb(0, 16, 135), #2e004d);
             
-            // Tamanho e opacidade baseados na proximidade
-            const tamanho = scale * 3;
-            const opacidade = (1 - g.z / 1000) * 0.5;
+            background-size: 200px 200px, 200px 200px, 200px 200px, 200px 200px, 200px 200px, 200px 200px, 100% 100%;
+            background-attachment: fixed;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            font-family: sans-serif;
+            color: white;
+            overflow: hidden; 
+            position: relative;
+        }
 
-            ctx.beginPath();
-            ctx.strokeStyle = `rgba(174, 194, 224, ${opacidade})`;
-            ctx.lineWidth = tamanho;
-            ctx.lineCap = 'round';
-            
-            // Desenha o rastro da gota
-            ctx.moveTo(x2d, y2d);
-            ctx.lineTo(x2d + (g.x * scale * 0.1), y2d + (g.y * scale * 0.1));
-            
-            ctx.stroke();
+        .rayquaza-fundo {
+            position: absolute;
+            top: 8%;
+            right: 18%;
+            width: 70px;
+            opacity: 0.5;
+            z-index: -1;
+            filter: blur(1px);
+        }
+
+        .mimikyu-topo {
+            width: 80px; 
+            height: auto;
+            margin-left: 120px; 
+            margin-bottom: -25px; 
+            z-index: 2;
+            filter: drop-shadow(0 0 5px rgba(0,0,0,0.5));
+        }
+
+        .meu-gif {
+            width: 300px;
+            height: auto;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            z-index: 1;
+        }
+
+        h1 {
+            margin: 5px 0;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
+            z-index: 1;
+        }
+
+        .texto-vermelho {
+            color: #ff3333;
+            font-size: 50px;
+            margin: 0; 
+            text-transform: uppercase;
+            text-shadow: 0 0 15px rgba(255, 0, 0, 0.7);
+        }
+
+        iframe {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+
+    <div id="overlay">
+        <button id="btn-entrar">ENTRAR NO ESPAÇO</button>
+    </div>
+
+    <div id="player-container"></div>
+
+    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/384.gif" 
+         alt="Rayquaza" class="rayquaza-fundo">
+
+    <h1>Gabriel</h1>
+
+    <img src="https://media.tenor.com/dBsHOlc6L30AAAAj/mimikyu.gif" 
+         alt="Mimikyu" class="mimikyu-topo">
+
+    <h1 class="texto-vermelho">hello world!</h1>
+
+    <img src="https://media1.tenor.com/m/h1avbRkVQFIAAAAC/butcher-vanity-vane-lily.gif"
+         alt="Butcher Vanity" class="meu-gif">
+
+    <script>
+        const overlay = document.getElementById('overlay');
+        const btn = document.getElementById('btn-entrar');
+        const playerContainer = document.getElementById('player-container');
+
+        btn.addEventListener('click', () => {
+            // 1. Esconde a tela preta
+            overlay.style.opacity = '0';
+            setTimeout(() => overlay.style.display = 'none', 1000);
+
+            // 2. Cria o player de música (YouTube Looping)
+            playerContainer.innerHTML = `
+                <iframe 
+                    src="https://www.youtube.com/embed/iymkhH754bo?autoplay=1&loop=1&playlist=iymkhH754bo" 
+                    allow="autoplay">
+                </iframe>`;
         });
+    </script>
 
-        requestAnimationFrame(animarChuva);
-    }
-
-    btn.addEventListener('click', () => {
-        overlay.style.opacity = '0';
-        setTimeout(() => {
-            overlay.style.display = 'none';
-            animarChuva(); // Inicia a chuva após entrar
-        }, 1000);
-
-        playerContainer.innerHTML = `
-            <iframe 
-                src="https://www.youtube.com/embed/iymkhH754bo?autoplay=1&loop=1&playlist=iymkhH754bo" 
-                allow="autoplay">
-            </iframe>`;
-    });
-</script>
+</body>
+</html>
