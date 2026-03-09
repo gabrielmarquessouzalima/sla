@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+[<!DOCTYPE html>
 <html lang="pt-br">
 <head>
     <meta charset="UTF-8">
@@ -45,7 +45,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 0; /* Fica atrás dos GIFs e textos */
+            z-index: 0; 
             pointer-events: none;
         }
 
@@ -73,14 +73,37 @@
             position: relative;
         }
 
-        .rayquaza-fundo {
+        /* Container para agrupar Lua e Rayquaza */
+        .rayquaza-container {
             position: absolute;
             top: 8%;
             right: 18%;
-            width: 70px;
-            opacity: 0.5;
+            width: 80px;
+            height: 80px;
             z-index: -1;
-            filter: blur(1px);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        /* Estilo da Lua Crescente */
+        .lua {
+            position: absolute;
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            box-shadow: 12px 12px 0 0 white; /* Cria o formato de foice */
+            transform: rotate(-35deg);
+            filter: blur(1px) drop-shadow(0 0 10px rgba(255, 255, 255, 0.4));
+            opacity: 0.6;
+        }
+
+        .rayquaza-fundo {
+            position: relative;
+            width: 70px;
+            opacity: 0.7;
+            filter: blur(0.5px);
+            z-index: 1;
         }
 
         .mimikyu-topo {
@@ -130,8 +153,11 @@
 
     <div id="player-container"></div>
 
-    <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/384.gif" 
-         alt="Rayquaza" class="rayquaza-fundo">
+    <div class="rayquaza-container">
+        <div class="lua"></div>
+        <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/384.gif" 
+             alt="Rayquaza" class="rayquaza-fundo">
+    </div>
 
     <h1>Gabriel</h1>
 
@@ -150,9 +176,8 @@
         const canvas = document.getElementById('chuva');
         const ctx = canvas.getContext('2d');
 
-        // Configurações da chuva
         let gotas = [];
-        const numGotas = 120; // Quantidade de pingos na tela
+        const numGotas = 120;
 
         function resize() {
             canvas.width = window.innerWidth;
@@ -171,31 +196,25 @@
             };
         }
 
-        // Inicializa as gotas
         for (let i = 0; i < numGotas; i++) {
             gotas.push(criarGota());
         }
 
         function animarChuva() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
             const centroX = canvas.width / 2;
             const centroY = canvas.height / 2;
 
             gotas.forEach(g => {
                 g.z -= g.velocidade;
-
                 if (g.z <= 0) {
                     g.z = 1000;
                     g.x = Math.random() * canvas.width - canvas.width / 2;
                     g.y = Math.random() * canvas.height - canvas.height / 2;
                 }
-
-                // Projeção matemática para efeito de perspectiva "olhando para cima"
                 const escala = 400 / (400 + g.z);
                 const x2d = g.x * escala + centroX;
                 const y2d = g.y * escala + centroY;
-                
                 const tamanho = escala * 3;
                 const opacidade = (1 - g.z / 1000);
 
@@ -203,27 +222,20 @@
                 ctx.strokeStyle = `rgba(180, 200, 255, ${opacidade * 0.6})`;
                 ctx.lineWidth = tamanho;
                 ctx.lineCap = 'round';
-                
-                // Desenha o rastro da gota saindo do centro
                 ctx.moveTo(x2d, y2d);
                 ctx.lineTo(x2d + (g.x * escala * 0.05), y2d + (g.y * escala * 0.05));
-                
                 ctx.stroke();
             });
-
             requestAnimationFrame(animarChuva);
         }
 
         btn.addEventListener('click', () => {
-            // Esconde a tela preta
             overlay.style.opacity = '0';
             setTimeout(() => {
                 overlay.style.display = 'none';
-                // Começa a animação da chuva após o clique
                 animarChuva();
             }, 1000);
 
-            // Toca a música
             playerContainer.innerHTML = `
                 <iframe 
                     src="https://www.youtube.com/embed/iymkhH754bo?autoplay=1&loop=1&playlist=iymkhH754bo" 
@@ -233,4 +245,4 @@
     </script>
 
 </body>
-</html>
+</html>]
