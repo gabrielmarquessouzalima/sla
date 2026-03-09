@@ -45,8 +45,41 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 0; /* Fica atrás dos GIFs e textos */
+            z-index: 0; 
             pointer-events: none;
+        }
+
+        /* Estilo das Nuvens */
+        .nuvens-container {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 180px;
+            z-index: 1;
+            pointer-events: none;
+            overflow: hidden;
+            opacity: 0; /* Começa invisível e aparece com o JS */
+            transition: opacity 2s ease;
+        }
+
+        .nuvem {
+            position: absolute;
+            width: 600px;
+            height: 140px;
+            background: rgba(255, 255, 255, 0.06);
+            filter: blur(60px);
+            border-radius: 50%;
+            top: -40px;
+        }
+
+        .nuvem:nth-child(1) { left: -10%; animation: flutuar 20s infinite alternate ease-in-out; }
+        .nuvem:nth-child(2) { left: 30%; width: 700px; background: rgba(255, 255, 255, 0.04); animation: flutuar 25s infinite alternate-reverse ease-in-out; }
+        .nuvem:nth-child(3) { right: -10%; animation: flutuar 18s infinite alternate ease-in-out; }
+
+        @keyframes flutuar {
+            from { transform: translateX(-60px); }
+            to { transform: translateX(60px); }
         }
 
         body {
@@ -75,7 +108,7 @@
 
         .rayquaza-fundo {
             position: absolute;
-            top: 8%;
+            top: 12%;
             right: 18%;
             width: 70px;
             opacity: 0.5;
@@ -98,13 +131,13 @@
             border-radius: 10px;
             margin-top: 20px;
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-            z-index: 1;
+            z-index: 2;
         }
 
         h1 {
             margin: 5px 0;
             text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
-            z-index: 1;
+            z-index: 2;
         }
 
         .texto-vermelho {
@@ -124,6 +157,12 @@
 
     <div id="overlay">
         <button id="btn-entrar">ENTRAR NO ESPAÇO</button>
+    </div>
+
+    <div class="nuvens-container" id="nuvens">
+        <div class="nuvem"></div>
+        <div class="nuvem"></div>
+        <div class="nuvem"></div>
     </div>
 
     <canvas id="chuva"></canvas>
@@ -148,11 +187,11 @@
         const btn = document.getElementById('btn-entrar');
         const playerContainer = document.getElementById('player-container');
         const canvas = document.getElementById('chuva');
+        const nuvens = document.getElementById('nuvens');
         const ctx = canvas.getContext('2d');
 
-        // Configurações da chuva
         let gotas = [];
-        const numGotas = 120; // Quantidade de pingos na tela
+        const numGotas = 120;
 
         function resize() {
             canvas.width = window.innerWidth;
@@ -171,31 +210,26 @@
             };
         }
 
-        // Inicializa as gotas
         for (let i = 0; i < numGotas; i++) {
             gotas.push(criarGota());
         }
 
         function animarChuva() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
             const centroX = canvas.width / 2;
             const centroY = canvas.height / 2;
 
             gotas.forEach(g => {
                 g.z -= g.velocidade;
-
                 if (g.z <= 0) {
                     g.z = 1000;
                     g.x = Math.random() * canvas.width - canvas.width / 2;
                     g.y = Math.random() * canvas.height - canvas.height / 2;
                 }
 
-                // Projeção matemática para efeito de perspectiva "olhando para cima"
                 const escala = 400 / (400 + g.z);
                 const x2d = g.x * escala + centroX;
                 const y2d = g.y * escala + centroY;
-                
                 const tamanho = escala * 3;
                 const opacidade = (1 - g.z / 1000);
 
@@ -203,11 +237,8 @@
                 ctx.strokeStyle = `rgba(180, 200, 255, ${opacidade * 0.6})`;
                 ctx.lineWidth = tamanho;
                 ctx.lineCap = 'round';
-                
-                // Desenha o rastro da gota saindo do centro
                 ctx.moveTo(x2d, y2d);
                 ctx.lineTo(x2d + (g.x * escala * 0.05), y2d + (g.y * escala * 0.05));
-                
                 ctx.stroke();
             });
 
@@ -215,15 +246,14 @@
         }
 
         btn.addEventListener('click', () => {
-            // Esconde a tela preta
             overlay.style.opacity = '0';
             setTimeout(() => {
                 overlay.style.display = 'none';
-                // Começa a animação da chuva após o clique
+                // Faz as nuvens aparecerem suavemente junto com a chuva
+                nuvens.style.opacity = '1';
                 animarChuva();
             }, 1000);
 
-            // Toca a música
             playerContainer.innerHTML = `
                 <iframe 
                     src="https://www.youtube.com/embed/iymkhH754bo?autoplay=1&loop=1&playlist=iymkhH754bo" 
