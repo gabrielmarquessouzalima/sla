@@ -45,43 +45,8 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 1; 
+            z-index: 0; /* Fica atrás dos GIFs e textos */
             pointer-events: none;
-        }
-
-        /* --- NUVENS NUBLADAS (TEMPESTADE) --- */
-        .nuvens-container {
-            position: fixed;
-            top: -50px; /* Esconde a borda de cima */
-            left: 0;
-            width: 100%;
-            height: 300px;
-            z-index: 10; /* Fica acima dos textos e GIFs para dar profundidade */
-            pointer-events: none;
-            overflow: hidden;
-            opacity: 0; 
-            transition: opacity 2s ease;
-        }
-
-        .nuvem {
-            position: absolute;
-            width: 1000px; 
-            height: 250px;
-            /* Cor cinza escuro de tempestade */
-            background: radial-gradient(circle, rgba(40, 40, 55, 0.8) 0%, rgba(20, 20, 30, 0) 70%);
-            filter: blur(40px);
-            border-radius: 50%;
-        }
-
-        /* Posições variadas para cobrir o topo todo */
-        .nuvem:nth-child(1) { top: -100px; left: -10%; animation: flutuar 25s infinite alternate ease-in-out; }
-        .nuvem:nth-child(2) { top: -80px; left: 20%; width: 1200px; opacity: 0.9; animation: flutuar 30s infinite alternate-reverse ease-in-out; }
-        .nuvem:nth-child(3) { top: -120px; right: -10%; animation: flutuar 22s infinite alternate ease-in-out; }
-        .nuvem:nth-child(4) { top: -50px; left: 50%; transform: translateX(-50%); width: 800px; opacity: 0.7; }
-
-        @keyframes flutuar {
-            from { transform: translateX(-100px); }
-            to { transform: translateX(100px); }
         }
 
         body {
@@ -92,7 +57,7 @@
                 radial-gradient(1.5px 1.5px at 90px 40px, white, rgba(0,0,0,0)),
                 radial-gradient(1px 1px at 130px 80px, white, rgba(0,0,0,0)),
                 radial-gradient(1px 1px at 160px 120px, white, rgba(0,0,0,0)),
-                linear-gradient(to bottom, rgb(0, 10, 80), #1a0033); /* Escureci um pouco o fundo */
+                linear-gradient(to bottom, rgb(0, 16, 135), #2e004d);
             
             background-size: 200px 200px, 200px 200px, 200px 200px, 200px 200px, 200px 200px, 200px 200px, 100% 100%;
             background-attachment: fixed;
@@ -110,11 +75,11 @@
 
         .rayquaza-fundo {
             position: absolute;
-            top: 15%;
+            top: 8%;
             right: 18%;
             width: 70px;
-            opacity: 0.4;
-            z-index: 0;
+            opacity: 0.5;
+            z-index: -1;
             filter: blur(1px);
         }
 
@@ -123,7 +88,7 @@
             height: auto;
             margin-left: 120px; 
             margin-bottom: -25px; 
-            z-index: 5;
+            z-index: 2;
             filter: drop-shadow(0 0 5px rgba(0,0,0,0.5));
         }
 
@@ -133,13 +98,13 @@
             border-radius: 10px;
             margin-top: 20px;
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-            z-index: 5;
+            z-index: 1;
         }
 
         h1 {
             margin: 5px 0;
             text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
-            z-index: 5;
+            z-index: 1;
         }
 
         .texto-vermelho {
@@ -159,13 +124,6 @@
 
     <div id="overlay">
         <button id="btn-entrar">ENTRAR NO ESPAÇO</button>
-    </div>
-
-    <div class="nuvens-container" id="nuvens">
-        <div class="nuvem"></div>
-        <div class="nuvem"></div>
-        <div class="nuvem"></div>
-        <div class="nuvem"></div>
     </div>
 
     <canvas id="chuva"></canvas>
@@ -190,11 +148,11 @@
         const btn = document.getElementById('btn-entrar');
         const playerContainer = document.getElementById('player-container');
         const canvas = document.getElementById('chuva');
-        const nuvens = document.getElementById('nuvens');
         const ctx = canvas.getContext('2d');
 
+        // Configurações da chuva
         let gotas = [];
-        const numGotas = 130;
+        const numGotas = 120; // Quantidade de pingos na tela
 
         function resize() {
             canvas.width = window.innerWidth;
@@ -213,26 +171,31 @@
             };
         }
 
+        // Inicializa as gotas
         for (let i = 0; i < numGotas; i++) {
             gotas.push(criarGota());
         }
 
         function animarChuva() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
+            
             const centroX = canvas.width / 2;
             const centroY = canvas.height / 2;
 
             gotas.forEach(g => {
                 g.z -= g.velocidade;
+
                 if (g.z <= 0) {
                     g.z = 1000;
                     g.x = Math.random() * canvas.width - canvas.width / 2;
                     g.y = Math.random() * canvas.height - canvas.height / 2;
                 }
 
+                // Projeção matemática para efeito de perspectiva "olhando para cima"
                 const escala = 400 / (400 + g.z);
                 const x2d = g.x * escala + centroX;
                 const y2d = g.y * escala + centroY;
+                
                 const tamanho = escala * 3;
                 const opacidade = (1 - g.z / 1000);
 
@@ -240,8 +203,11 @@
                 ctx.strokeStyle = `rgba(180, 200, 255, ${opacidade * 0.6})`;
                 ctx.lineWidth = tamanho;
                 ctx.lineCap = 'round';
+                
+                // Desenha o rastro da gota saindo do centro
                 ctx.moveTo(x2d, y2d);
                 ctx.lineTo(x2d + (g.x * escala * 0.05), y2d + (g.y * escala * 0.05));
+                
                 ctx.stroke();
             });
 
@@ -249,13 +215,15 @@
         }
 
         btn.addEventListener('click', () => {
+            // Esconde a tela preta
             overlay.style.opacity = '0';
             setTimeout(() => {
                 overlay.style.display = 'none';
-                nuvens.style.opacity = '1'; 
+                // Começa a animação da chuva após o clique
                 animarChuva();
             }, 1000);
 
+            // Toca a música
             playerContainer.innerHTML = `
                 <iframe 
                     src="https://www.youtube.com/embed/iymkhH754bo?autoplay=1&loop=1&playlist=iymkhH754bo" 
