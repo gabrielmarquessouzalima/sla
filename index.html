@@ -149,6 +149,110 @@
                 </iframe>`;
         });
     </script>
+<canvas id="chuva"></canvas>
 
+<style>
+    /* ... seus estilos anteriores ... */
+
+    #chuva {
+        position: fixed;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        z-index: 0; /* Fica atrás do texto, mas acima do fundo */
+        pointer-events: none; /* Não atrapalha os cliques */
+    }
+</style>
+
+<script>
+    const overlay = document.getElementById('overlay');
+    const btn = document.getElementById('btn-entrar');
+    const playerContainer = document.getElementById('player-container');
+    const canvas = document.getElementById('chuva');
+    const ctx = canvas.getContext('2d');
+
+    let gotas = [];
+    const numGotas = 150;
+
+    // Redimensionar canvas
+    function resize() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resize);
+    resize();
+
+    // Criar gota com perspectiva
+    function criarGota() {
+        return {
+            x: Math.random() * canvas.width - canvas.width / 2,
+            y: Math.random() * canvas.height - canvas.height / 2,
+            z: Math.random() * 1000, // Profundidade
+            vel: 15 // Velocidade da queda
+        };
+    }
+
+    // Inicializar gotas
+    for (let i = 0; i < numGotas; i++) {
+        gotas.push(criarGota());
+    }
+
+    function animarChuva() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        
+        const centerX = canvas.width / 2;
+        const centerY = canvas.height / 2;
+
+        gotas.forEach(g => {
+            // Movimenta a gota em nossa direção (eixo Z)
+            g.z -= g.vel;
+
+            // Se a gota passar da tela, reseta ela lá no fundo
+            if (g.z <= 0) {
+                g.z = 1000;
+                g.x = Math.random() * canvas.width - canvas.width / 2;
+                g.y = Math.random() * canvas.height - canvas.height / 2;
+            }
+
+            // Projeção 3D para 2D
+            const fov = 400; // Campo de visão
+            const scale = fov / (fov + g.z);
+            const x2d = g.x * scale + centerX;
+            const y2d = g.y * scale + centerY;
+            
+            // Tamanho e opacidade baseados na proximidade
+            const tamanho = scale * 3;
+            const opacidade = (1 - g.z / 1000) * 0.5;
+
+            ctx.beginPath();
+            ctx.strokeStyle = `rgba(174, 194, 224, ${opacidade})`;
+            ctx.lineWidth = tamanho;
+            ctx.lineCap = 'round';
+            
+            // Desenha o rastro da gota
+            ctx.moveTo(x2d, y2d);
+            ctx.lineTo(x2d + (g.x * scale * 0.1), y2d + (g.y * scale * 0.1));
+            
+            ctx.stroke();
+        });
+
+        requestAnimationFrame(animarChuva);
+    }
+
+    btn.addEventListener('click', () => {
+        overlay.style.opacity = '0';
+        setTimeout(() => {
+            overlay.style.display = 'none';
+            animarChuva(); // Inicia a chuva após entrar
+        }, 1000);
+
+        playerContainer.innerHTML = `
+            <iframe 
+                src="https://www.youtube.com/embed/iymkhH754bo?autoplay=1&loop=1&playlist=iymkhH754bo" 
+                allow="autoplay">
+            </iframe>`;
+    });
+</script>
 </body>
 </html>
