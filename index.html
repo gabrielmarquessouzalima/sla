@@ -49,14 +49,15 @@
             pointer-events: none;
         }
 
-        /* --- NOVO ESTILO DAS NUVENS --- */
+        /* --- NUVENS AJUSTADAS (MAIS SUAVES) --- */
         .nuvem {
             position: absolute;
-            width: 150px;
-            height: 50px;
-            background: rgba(220, 230, 255, 0.5); /* Cor mais clara */
+            width: 120px;
+            height: 40px;
+            /* Cor mais sutil e menos sólida */
+            background: rgba(150, 170, 220, 0.25); 
             border-radius: 100px;
-            filter: blur(15px); /* Blur ajustado para dar forma */
+            filter: blur(20px); /* Blur maior para suavizar as bordas */
             z-index: 0;
             pointer-events: none;
         }
@@ -64,23 +65,22 @@
         .nuvem::after, .nuvem::before {
             content: '';
             position: absolute;
-            background: rgba(220, 230, 255, 0.5);
+            background: rgba(150, 170, 220, 0.2);
             border-radius: 50%;
         }
 
-        /* Círculos que dão formato de "bolhas" à nuvem */
         .nuvem::after { 
-            width: 90px; 
-            height: 90px; 
-            top: -45px; 
-            left: 25px; 
+            width: 80px; 
+            height: 80px; 
+            top: -40px; 
+            left: 20px; 
         }
 
         .nuvem::before { 
-            width: 70px; 
-            height: 70px; 
-            top: -30px; 
-            right: 20px; 
+            width: 60px; 
+            height: 60px; 
+            top: -25px; 
+            right: 15px; 
         }
 
         body {
@@ -238,15 +238,15 @@
         }
 
         function criarNuvens() {
-            const quantidade = 45; // Aumentado para cobrir mais o espaço
+            const quantidade = 18; // Reduzi para não ficar exagerado
             for (let i = 0; i < quantidade; i++) {
                 const nuvem = document.createElement('div');
                 nuvem.className = 'nuvem';
                 
-                const y = Math.random() * 100; // Espalhado por toda a altura
+                const y = Math.random() * 80; 
                 const x = Math.random() * 100;
-                const escala = 0.6 + Math.random() * 2.5; // Tamanhos variados para profundidade
-                const opacidadeRandom = 0.2 + Math.random() * 0.4;
+                const escala = 1 + Math.random() * 2; 
+                const opacidadeRandom = 0.1 + Math.random() * 0.3; // Bem mais transparente
                 
                 nuvem.style.top = y + 'vh';
                 nuvem.style.left = x + 'vw'; 
