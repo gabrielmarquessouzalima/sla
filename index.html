@@ -49,15 +49,15 @@
             pointer-events: none;
         }
 
-        /* --- NUVENS NOTURNAS ESCURAS --- */
+        /* --- NUVENS NOTURNAS EQUILIBRADAS --- */
         .nuvem {
             position: absolute;
             width: 140px;
             height: 45px;
-            /* Tom cinza-azulado bem escuro */
-            background: rgba(20, 25, 40, 0.8); 
+            /* Cinza azulado um pouco mais visível, mas ainda noturno */
+            background: rgba(35, 45, 70, 0.45); 
             border-radius: 100px;
-            filter: blur(25px); /* Suave nas bordas para misturar no céu */
+            filter: blur(25px); 
             z-index: 0;
             pointer-events: none;
         }
@@ -65,7 +65,7 @@
         .nuvem::after, .nuvem::before {
             content: '';
             position: absolute;
-            background: rgba(15, 20, 35, 0.7);
+            background: rgba(35, 45, 70, 0.4);
             border-radius: 50%;
         }
 
@@ -91,7 +91,7 @@
                 radial-gradient(1.5px 1.5px at 90px 40px, white, rgba(0,0,0,0)),
                 radial-gradient(1px 1px at 130px 80px, white, rgba(0,0,0,0)),
                 radial-gradient(1px 1px at 160px 120px, white, rgba(0,0,0,0)),
-                linear-gradient(to bottom, rgb(0, 10, 80), #1a002e); /* Fundo um pouco mais fechado */
+                linear-gradient(to bottom, rgb(0, 10, 80), #1a002e);
             
             background-size: 200px 200px, 200px 200px, 200px 200px, 200px 200px, 200px 200px, 200px 200px, 100% 100%;
             background-attachment: fixed;
@@ -238,15 +238,15 @@
         }
 
         function criarNuvens() {
-            const quantidade = 35; // Quantidade aumentada para preencher bem
+            const quantidade = 25; // Reduzi para espalhar mais
             for (let i = 0; i < quantidade; i++) {
                 const nuvem = document.createElement('div');
                 nuvem.className = 'nuvem';
                 
-                const y = Math.random() * 90; 
+                const y = Math.random() * 95; 
                 const x = Math.random() * 100;
-                const escala = 1.2 + Math.random() * 2.5; 
-                const opacidadeRandom = 0.4 + Math.random() * 0.4; 
+                const escala = 1.0 + Math.random() * 2.2; 
+                const opacidadeRandom = 0.3 + Math.random() * 0.3; 
                 
                 nuvem.style.top = y + 'vh';
                 nuvem.style.left = x + 'vw'; 
