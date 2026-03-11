@@ -49,13 +49,13 @@
             pointer-events: none;
         }
 
-        /* --- NUVENS NOTURNAS EQUILIBRADAS --- */
+        /* --- NUVENS AJUSTADAS (NOTURNAS E VISÍVEIS) --- */
         .nuvem {
             position: absolute;
             width: 140px;
             height: 45px;
-            /* Cinza azulado um pouco mais visível, mas ainda noturno */
-            background: rgba(35, 45, 70, 0.45); 
+            /* Cor levemente mais clara para dar visibilidade, mas ainda cinza-azulada */
+            background: rgba(50, 60, 90, 0.5); 
             border-radius: 100px;
             filter: blur(25px); 
             z-index: 0;
@@ -65,7 +65,7 @@
         .nuvem::after, .nuvem::before {
             content: '';
             position: absolute;
-            background: rgba(35, 45, 70, 0.4);
+            background: rgba(45, 55, 85, 0.45);
             border-radius: 50%;
         }
 
@@ -238,7 +238,7 @@
         }
 
         function criarNuvens() {
-            const quantidade = 25; // Reduzi para espalhar mais
+            const quantidade = 32; // Aumentei um pouco para preencher melhor
             for (let i = 0; i < quantidade; i++) {
                 const nuvem = document.createElement('div');
                 nuvem.className = 'nuvem';
@@ -246,7 +246,7 @@
                 const y = Math.random() * 95; 
                 const x = Math.random() * 100;
                 const escala = 1.0 + Math.random() * 2.2; 
-                const opacidadeRandom = 0.3 + Math.random() * 0.3; 
+                const opacidadeRandom = 0.35 + Math.random() * 0.35; 
                 
                 nuvem.style.top = y + 'vh';
                 nuvem.style.left = x + 'vw'; 
