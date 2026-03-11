@@ -45,33 +45,33 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 0; 
+            z-index: 1; 
             pointer-events: none;
         }
 
         /* Estilo das Nuvens */
         .nuvem {
             position: absolute;
-            width: 200px;
-            height: 60px;
-            background: rgba(255, 255, 255, 0.08); /* Sutil para ver o fundo */
+            width: 250px;
+            height: 70px;
+            background: rgba(255, 255, 255, 0.15); /* Um pouco mais visível */
             border-radius: 200px;
-            filter: blur(35px); /* Efeito de névoa */
-            z-index: -1; /* Atrás dos elementos principais */
+            filter: blur(40px); /* Efeito esfumaçado */
+            z-index: 0; /* Acima do fundo, mas atrás dos GIFs */
             pointer-events: none;
         }
 
         .nuvem::after, .nuvem::before {
             content: '';
             position: absolute;
-            background: rgba(255, 255, 255, 0.08);
+            background: rgba(255, 255, 255, 0.15);
             border-radius: 50%;
         }
-        .nuvem::after { width: 100px; height: 100px; top: -50px; left: 30px; }
-        .nuvem::before { width: 120px; height: 120px; top: -70px; right: 30px; }
+        .nuvem::after { width: 120px; height: 120px; top: -60px; left: 40px; }
+        .nuvem::before { width: 140px; height: 140px; top: -80px; right: 40px; }
 
         @keyframes moverNuvem {
-            from { transform: translateX(-300px); }
+            from { transform: translateX(-400px); }
             to { transform: translateX(110vw); }
         }
 
@@ -105,7 +105,7 @@
             right: 18%;
             width: 70px;
             opacity: 0.5;
-            z-index: -1;
+            z-index: 1;
             filter: blur(1px);
         }
 
@@ -114,7 +114,7 @@
             height: auto;
             margin-left: 120px; 
             margin-bottom: -25px; 
-            z-index: 2;
+            z-index: 5;
             filter: drop-shadow(0 0 5px rgba(0,0,0,0.5));
         }
 
@@ -124,13 +124,13 @@
             border-radius: 10px;
             margin-top: 20px;
             box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
-            z-index: 1;
+            z-index: 5;
         }
 
         h1 {
             margin: 5px 0;
             text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
-            z-index: 1;
+            z-index: 5;
         }
 
         .texto-vermelho {
@@ -229,22 +229,23 @@
             requestAnimationFrame(animarChuva);
         }
 
-        // Função para criar as nuvens espalhadas
         function criarNuvens() {
-            const quantidade = 6; // Número de nuvens na tela
+            const quantidade = 5; 
             for (let i = 0; i < quantidade; i++) {
                 const nuvem = document.createElement('div');
                 nuvem.className = 'nuvem';
                 
-                const y = Math.random() * 70; // Espalha na vertical (até 70% da altura)
-                const delay = Math.random() * 30; // Tempos de entrada diferentes
-                const duracao = 40 + Math.random() * 60; // Movimento bem lento
-                const escala = 0.6 + Math.random() * 1.2;
+                const y = Math.random() * 60; 
+                const duracao = 40 + Math.random() * 40; 
+                const escala = 0.8 + Math.random() * 1.5;
+                
+                // Começa em posições aleatórias para já estarem na tela ao entrar
+                const posX = Math.random() * 100;
 
                 nuvem.style.top = y + '%';
-                nuvem.style.left = '-300px';
+                nuvem.style.left = posX + 'vw'; 
                 nuvem.style.transform = `scale(${escala})`;
-                nuvem.style.animation = `moverNuvem ${duracao}s linear ${delay}s infinite`;
+                nuvem.style.animation = `moverNuvem ${duracao}s linear infinite`;
 
                 document.body.appendChild(nuvem);
             }
@@ -255,7 +256,7 @@
             setTimeout(() => {
                 overlay.style.display = 'none';
                 animarChuva();
-                criarNuvens(); // Inicia as nuvens ao entrar
+                criarNuvens(); 
             }, 1000);
 
             playerContainer.innerHTML = `
