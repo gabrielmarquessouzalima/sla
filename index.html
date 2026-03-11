@@ -49,6 +49,22 @@
             pointer-events: none;
         }
 
+        /* --- LUA CRESCENTE --- */
+        .lua {
+            position: absolute;
+            top: 5%; /* Ajustado para ficar centralizada atrás do Rayquaza */
+            right: 17%;
+            width: 100px;
+            height: 100px;
+            background-color: transparent;
+            border-radius: 50%;
+            /* Cria o efeito de lua crescente usando sombra interna */
+            box-shadow: -15px 10px 0 0 rgba(255, 255, 230, 0.8);
+            filter: blur(1px) drop-shadow(0 0 20px rgba(255, 255, 200, 0.4));
+            z-index: 0;
+            transform: rotate(-15deg);
+        }
+
         /* --- NUVENS NOTURNAS CENTRALIZADAS --- */
         .nuvem {
             position: absolute;
@@ -111,9 +127,9 @@
             top: 8%;
             right: 18%;
             width: 70px;
-            opacity: 0.4;
+            opacity: 0.5; /* Aumentei um tiquinho a opacidade para destacar contra a lua */
             z-index: 1;
-            filter: blur(1px);
+            filter: blur(0.5px);
         }
 
         .mimikyu-topo {
@@ -162,6 +178,8 @@
     <canvas id="chuva"></canvas>
 
     <div id="player-container"></div>
+
+    <div class="lua"></div>
 
     <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/384.gif" 
          alt="Rayquaza" class="rayquaza-fundo">
@@ -242,14 +260,12 @@
                 const nuvem = document.createElement('div');
                 nuvem.className = 'nuvem';
                 
-                // --- LÓGICA DE CENTRALIZAÇÃO ---
-                // 70% das nuvens ficam entre 20% e 80% da tela (Centro)
                 let x, y;
                 if (Math.random() > 0.3) {
-                    x = 20 + Math.random() * 60; // Centro horizontal
-                    y = 15 + Math.random() * 70; // Centro vertical
+                    x = 20 + Math.random() * 60;
+                    y = 15 + Math.random() * 70;
                 } else {
-                    x = Math.random() * 100; // Espalhado
+                    x = Math.random() * 100;
                     y = Math.random() * 100;
                 }
                 
