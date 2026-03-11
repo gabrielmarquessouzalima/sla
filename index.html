@@ -49,12 +49,11 @@
             pointer-events: none;
         }
 
-        /* --- NUVENS NOTURNAS (VERSÃO FINAL) --- */
+        /* --- NUVENS NOTURNAS CENTRALIZADAS --- */
         .nuvem {
             position: absolute;
             width: 150px;
             height: 50px;
-            /* Um cinza-azulado que se destaca no fundo roxo/azul escuro */
             background: rgba(60, 70, 100, 0.55); 
             border-radius: 100px;
             filter: blur(22px); 
@@ -238,13 +237,22 @@
         }
 
         function criarNuvens() {
-            const quantidade = 40; // Agora com 40 nuvens bem espalhadas
+            const quantidade = 42; 
             for (let i = 0; i < quantidade; i++) {
                 const nuvem = document.createElement('div');
                 nuvem.className = 'nuvem';
                 
-                const y = Math.random() * 100; 
-                const x = Math.random() * 100;
+                // --- LÓGICA DE CENTRALIZAÇÃO ---
+                // 70% das nuvens ficam entre 20% e 80% da tela (Centro)
+                let x, y;
+                if (Math.random() > 0.3) {
+                    x = 20 + Math.random() * 60; // Centro horizontal
+                    y = 15 + Math.random() * 70; // Centro vertical
+                } else {
+                    x = Math.random() * 100; // Espalhado
+                    y = Math.random() * 100;
+                }
+                
                 const escala = 0.8 + Math.random() * 2.5; 
                 const opacidadeRandom = 0.3 + Math.random() * 0.4; 
                 
