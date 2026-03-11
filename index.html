@@ -49,15 +49,15 @@
             pointer-events: none;
         }
 
-        /* --- NUVENS AJUSTADAS (MAIS SUAVES) --- */
+        /* --- NUVENS NOTURNAS ESCURAS --- */
         .nuvem {
             position: absolute;
-            width: 120px;
-            height: 40px;
-            /* Cor mais sutil e menos sólida */
-            background: rgba(150, 170, 220, 0.25); 
+            width: 140px;
+            height: 45px;
+            /* Tom cinza-azulado bem escuro */
+            background: rgba(20, 25, 40, 0.8); 
             border-radius: 100px;
-            filter: blur(20px); /* Blur maior para suavizar as bordas */
+            filter: blur(25px); /* Suave nas bordas para misturar no céu */
             z-index: 0;
             pointer-events: none;
         }
@@ -65,22 +65,22 @@
         .nuvem::after, .nuvem::before {
             content: '';
             position: absolute;
-            background: rgba(150, 170, 220, 0.2);
+            background: rgba(15, 20, 35, 0.7);
             border-radius: 50%;
         }
 
         .nuvem::after { 
-            width: 80px; 
-            height: 80px; 
+            width: 90px; 
+            height: 90px; 
             top: -40px; 
-            left: 20px; 
+            left: 25px; 
         }
 
         .nuvem::before { 
-            width: 60px; 
-            height: 60px; 
+            width: 70px; 
+            height: 70px; 
             top: -25px; 
-            right: 15px; 
+            right: 20px; 
         }
 
         body {
@@ -91,7 +91,7 @@
                 radial-gradient(1.5px 1.5px at 90px 40px, white, rgba(0,0,0,0)),
                 radial-gradient(1px 1px at 130px 80px, white, rgba(0,0,0,0)),
                 radial-gradient(1px 1px at 160px 120px, white, rgba(0,0,0,0)),
-                linear-gradient(to bottom, rgb(0, 16, 135), #2e004d);
+                linear-gradient(to bottom, rgb(0, 10, 80), #1a002e); /* Fundo um pouco mais fechado */
             
             background-size: 200px 200px, 200px 200px, 200px 200px, 200px 200px, 200px 200px, 200px 200px, 100% 100%;
             background-attachment: fixed;
@@ -112,7 +112,7 @@
             top: 8%;
             right: 18%;
             width: 70px;
-            opacity: 0.5;
+            opacity: 0.4;
             z-index: 1;
             filter: blur(1px);
         }
@@ -238,15 +238,15 @@
         }
 
         function criarNuvens() {
-            const quantidade = 18; // Reduzi para não ficar exagerado
+            const quantidade = 35; // Quantidade aumentada para preencher bem
             for (let i = 0; i < quantidade; i++) {
                 const nuvem = document.createElement('div');
                 nuvem.className = 'nuvem';
                 
-                const y = Math.random() * 80; 
+                const y = Math.random() * 90; 
                 const x = Math.random() * 100;
-                const escala = 1 + Math.random() * 2; 
-                const opacidadeRandom = 0.1 + Math.random() * 0.3; // Bem mais transparente
+                const escala = 1.2 + Math.random() * 2.5; 
+                const opacidadeRandom = 0.4 + Math.random() * 0.4; 
                 
                 nuvem.style.top = y + 'vh';
                 nuvem.style.left = x + 'vw'; 
