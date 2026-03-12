@@ -49,20 +49,21 @@
             pointer-events: none;
         }
 
-        /* --- LUA CRESCENTE --- */
+        /* --- LUA CRESCENTE ATUALIZADA --- */
         .lua {
             position: absolute;
-            top: 5%; /* Ajustado para ficar centralizada atrás do Rayquaza */
+            top: 5%; 
             right: 17%;
             width: 100px;
             height: 100px;
             background-color: transparent;
             border-radius: 50%;
-            /* Cria o efeito de lua crescente usando sombra interna */
-            box-shadow: -15px 10px 0 0 rgba(255, 255, 230, 0.8);
+            /* Invertido para a direita (25px) e valor aumentado para ficar mais "cheinha" */
+            box-shadow: 25px 10px 0 0 rgba(255, 255, 230, 0.9);
             filter: blur(1px) drop-shadow(0 0 20px rgba(255, 255, 200, 0.4));
             z-index: 0;
-            transform: rotate(-15deg);
+            /* Rotação ajustada para o novo lado */
+            transform: rotate(15deg);
         }
 
         /* --- NUVENS NOTURNAS CENTRALIZADAS --- */
@@ -127,7 +128,7 @@
             top: 8%;
             right: 18%;
             width: 70px;
-            opacity: 0.5; /* Aumentei um tiquinho a opacidade para destacar contra a lua */
+            opacity: 0.5; 
             z-index: 1;
             filter: blur(0.5px);
         }
