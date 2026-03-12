@@ -45,11 +45,11 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 1; 
+            z-index: 3; /* Chuva na frente de quase tudo */
             pointer-events: none;
         }
 
-        /* --- LUA CRESCENTE ATUALIZADA --- */
+        /* --- LUA (Fundo) --- */
         .lua {
             position: absolute;
             top: 5%; 
@@ -58,15 +58,31 @@
             height: 100px;
             background-color: transparent;
             border-radius: 50%;
-            /* Invertido para a direita (25px) e valor aumentado para ficar mais "cheinha" */
             box-shadow: 25px 10px 0 0 rgba(255, 255, 230, 0.9);
             filter: blur(1px) drop-shadow(0 0 20px rgba(255, 255, 200, 0.4));
-            z-index: 0;
-            /* Rotação ajustada para o novo lado */
+            z-index: 1; /* Atrás do Rayquaza */
             transform: rotate(15deg);
         }
 
-        /* --- NUVENS NOTURNAS CENTRALIZADAS --- */
+        /* --- RAYQUAZA (Frente da Lua) --- */
+        .rayquaza-fundo {
+            position: absolute;
+            top: 8%;
+            right: 18%;
+            width: 70px;
+            opacity: 0.6; 
+            z-index: 2; /* Maior que a Lua (1) e menor que a chuva (3) */
+            filter: blur(0.5px);
+            animation: flutuar 4s ease-in-out infinite;
+        }
+
+        /* Animação para o Rayquaza flutuar */
+        @keyframes flutuar {
+            0%, 100% { transform: translateY(0) translateX(0); }
+            50% { transform: translateY(-15px) translateX(5px); }
+        }
+
+        /* --- NUVENS --- */
         .nuvem {
             position: absolute;
             width: 150px;
@@ -85,19 +101,8 @@
             border-radius: 50%;
         }
 
-        .nuvem::after { 
-            width: 95px; 
-            height: 95px; 
-            top: -45px; 
-            left: 28px; 
-        }
-
-        .nuvem::before { 
-            width: 75px; 
-            height: 75px; 
-            top: -30px; 
-            right: 22px; 
-        }
+        .nuvem::after { width: 95px; height: 95px; top: -45px; left: 28px; }
+        .nuvem::before { width: 75px; height: 75px; top: -30px; right: 22px; }
 
         body {
             background: 
@@ -121,16 +126,6 @@
             color: white;
             overflow: hidden; 
             position: relative;
-        }
-
-        .rayquaza-fundo {
-            position: absolute;
-            top: 8%;
-            right: 18%;
-            width: 70px;
-            opacity: 0.5; 
-            z-index: 1;
-            filter: blur(0.5px);
         }
 
         .mimikyu-topo {
@@ -165,9 +160,7 @@
             text-shadow: 0 0 15px rgba(255, 0, 0, 0.7);
         }
 
-        iframe {
-            display: none;
-        }
+        iframe { display: none; }
     </style>
 </head>
 <body>
@@ -261,14 +254,8 @@
                 const nuvem = document.createElement('div');
                 nuvem.className = 'nuvem';
                 
-                let x, y;
-                if (Math.random() > 0.3) {
-                    x = 20 + Math.random() * 60;
-                    y = 15 + Math.random() * 70;
-                } else {
-                    x = Math.random() * 100;
-                    y = Math.random() * 100;
-                }
+                let x = Math.random() * 100;
+                let y = Math.random() * 100;
                 
                 const escala = 0.8 + Math.random() * 2.5; 
                 const opacidadeRandom = 0.3 + Math.random() * 0.4; 
