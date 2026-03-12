@@ -45,7 +45,7 @@
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 3; /* Chuva na frente de quase tudo */
+            z-index: 3; 
             pointer-events: none;
         }
 
@@ -60,26 +60,49 @@
             border-radius: 50%;
             box-shadow: 25px 10px 0 0 rgba(255, 255, 230, 0.9);
             filter: blur(1px) drop-shadow(0 0 20px rgba(255, 255, 200, 0.4));
-            z-index: 1; /* Atrás do Rayquaza */
+            z-index: 1; 
             transform: rotate(15deg);
         }
 
-        /* --- RAYQUAZA (Frente da Lua) --- */
+        /* --- RAYQUAZA --- */
         .rayquaza-fundo {
             position: absolute;
             top: 8%;
             right: 18%;
             width: 70px;
             opacity: 0.6; 
-            z-index: 2; /* Maior que a Lua (1) e menor que a chuva (3) */
+            z-index: 2; 
             filter: blur(0.5px);
             animation: flutuar 4s ease-in-out infinite;
         }
 
-        /* Animação para o Rayquaza flutuar */
         @keyframes flutuar {
             0%, 100% { transform: translateY(0) translateX(0); }
             50% { transform: translateY(-15px) translateX(5px); }
+        }
+
+        /* --- GRAMA (Efeito de estar deitado) --- */
+        .grama {
+            position: fixed;
+            bottom: -20px;
+            width: 45%;
+            height: 250px;
+            background-image: url('https://www.transparentpng.com/download/grass/S9S8sL-grass-silhouette-png-file.png');
+            background-size: contain;
+            background-repeat: no-repeat;
+            z-index: 10; /* Na frente de quase tudo */
+            filter: brightness(0.1) blur(2px); /* Escura e um pouco desfocada para profundidade */
+            pointer-events: none;
+        }
+
+        .grama-esq {
+            left: -5%;
+            transform: rotate(5deg);
+        }
+
+        .grama-dir {
+            right: -5%;
+            transform: rotate(-5deg) scaleX(-1); /* Espelhado */
         }
 
         /* --- NUVENS --- */
@@ -171,6 +194,9 @@
 
     <canvas id="chuva"></canvas>
 
+    <div class="grama grama-esq"></div>
+    <div class="grama grama-dir"></div>
+
     <div id="player-container"></div>
 
     <div class="lua"></div>
@@ -253,18 +279,14 @@
             for (let i = 0; i < quantidade; i++) {
                 const nuvem = document.createElement('div');
                 nuvem.className = 'nuvem';
-                
                 let x = Math.random() * 100;
                 let y = Math.random() * 100;
-                
                 const escala = 0.8 + Math.random() * 2.5; 
                 const opacidadeRandom = 0.3 + Math.random() * 0.4; 
-                
                 nuvem.style.top = y + 'vh';
                 nuvem.style.left = x + 'vw'; 
                 nuvem.style.transform = `scale(${escala})`;
                 nuvem.style.opacity = opacidadeRandom;
-
                 document.body.appendChild(nuvem);
             }
         }
