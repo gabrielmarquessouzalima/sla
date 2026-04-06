@@ -84,39 +84,41 @@
         /* --- GRAMA (Efeito de estar deitado) --- */
         .grama {
             position: fixed;
-            bottom: -60px;
-            width: 55%;
-            height: 450px;
+            bottom: -80px;
+            width: 65%; /* Um pouco mais larga para fechar a visão */
+            height: 600px; /* Bem alta para criar profundidade */
             background-image: url('https://www.transparentpng.com/download/grass/S9S8sL-grass-silhouette-png-file.png');
             background-size: contain;
             background-repeat: no-repeat;
-            z-index: 99;
-            filter: brightness(0.05) blur(1.2px);
+            z-index: 200; /* À frente de tudo para simular proximidade do olho */
+            filter: brightness(0.02) blur(1.2px); /* Quase silhueta total */
             pointer-events: none;
-            transition: opacity 1s ease;
+            opacity: 0; /* Começa invisível */
+            transition: opacity 2s ease;
         }
 
         .grama-esq {
             left: -15%;
-            transform-origin: bottom center;
-            animation: balanco-esq 6s ease-in-out infinite;
+            transform: rotate(12deg);
+            transform-origin: bottom left;
+            animation: balanco-esq 8s ease-in-out infinite;
         }
 
         .grama-dir {
             right: -15%;
-            transform-origin: bottom center;
-            animation: balanco-dir 7s ease-in-out infinite;
+            transform: scaleX(-1) rotate(12deg);
+            transform-origin: bottom right;
+            animation: balanco-dir 9s ease-in-out infinite;
         }
 
-        /* Animação da grama balançando */
         @keyframes balanco-esq {
-            0%, 100% { transform: rotate(12deg) scaleX(1); }
-            50% { transform: rotate(15deg) scaleX(1.05); }
+            0%, 100% { transform: rotate(12deg) translateY(0); }
+            50% { transform: rotate(16deg) translateY(-10px); }
         }
 
         @keyframes balanco-dir {
-            0%, 100% { transform: rotate(-12deg) scaleX(-1); }
-            50% { transform: rotate(-15deg) scaleX(-1.05); }
+            0%, 100% { transform: scaleX(-1) rotate(12deg) translateY(0); }
+            50% { transform: scaleX(-1) rotate(16deg) translateY(-10px); }
         }
 
         /* --- NUVENS --- */
@@ -216,6 +218,7 @@
         const playerContainer = document.getElementById('player-container');
         const canvas = document.getElementById('chuva');
         const ctx = canvas.getContext('2d');
+        const gramas = document.querySelectorAll('.grama');
 
         let gotas = [];
         const numGotas = 120;
@@ -287,6 +290,10 @@
 
         btn.addEventListener('click', () => {
             overlay.style.opacity = '0';
+            
+            // Aparecer a grama suavemente ao entrar
+            gramas.forEach(g => g.style.opacity = '1');
+
             setTimeout(() => {
                 overlay.style.display = 'none';
                 animarChuva();
