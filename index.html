@@ -81,44 +81,61 @@
             50% { transform: translateY(-15px) translateX(5px); }
         }
 
-        /* --- GRAMA (Efeito de estar deitado) --- */
-        .grama {
+        /* --- MATO ALTO (CSS PURO) --- */
+        .container-mato {
             position: fixed;
-            bottom: -80px;
-            width: 65%; /* Um pouco mais larga para fechar a visão */
-            height: 600px; /* Bem alta para criar profundidade */
-            background-image: url('https://www.transparentpng.com/download/grass/S9S8sL-grass-silhouette-png-file.png');
-            background-size: contain;
-            background-repeat: no-repeat;
-            z-index: 200; /* À frente de tudo para simular proximidade do olho */
-            filter: brightness(0.02) blur(1.2px); /* Quase silhueta total */
+            bottom: -20px;
+            width: 100%;
+            height: 100%;
             pointer-events: none;
-            opacity: 0; /* Começa invisível */
+            z-index: 200;
+            opacity: 0;
             transition: opacity 2s ease;
         }
 
-        .grama-esq {
-            left: -15%;
-            transform: rotate(12deg);
-            transform-origin: bottom left;
-            animation: balanco-esq 8s ease-in-out infinite;
+        .mato {
+            position: absolute;
+            bottom: 0;
+            width: 10px;
+            height: 350px;
+            background: #050a00; /* Verde bem escuro quase preto */
+            border-radius: 50% 50% 0 0 / 100% 100% 0 0;
+            filter: blur(1px);
         }
 
-        .grama-dir {
-            right: -15%;
-            transform: scaleX(-1) rotate(12deg);
-            transform-origin: bottom right;
-            animation: balanco-dir 9s ease-in-out infinite;
+        /* Lado Esquerdo */
+        .mato-esq {
+            left: -20px;
+            transform: rotate(15deg);
+            /* Sombra cria várias folhas de mato com um único elemento */
+            box-shadow: 
+                20px 50px 0 2px #050a00, 
+                50px 100px 0 5px #020500, 
+                80px 150px 0 2px #050a00,
+                120px 200px 0 10px #000;
+            animation: balanco-mato-esq 7s ease-in-out infinite;
         }
 
-        @keyframes balanco-esq {
-            0%, 100% { transform: rotate(12deg) translateY(0); }
-            50% { transform: rotate(16deg) translateY(-10px); }
+        /* Lado Direito */
+        .mato-dir {
+            right: -20px;
+            transform: rotate(-15deg);
+            box-shadow: 
+                -20px 50px 0 2px #050a00, 
+                -50px 100px 0 5px #020500, 
+                -80px 150px 0 2px #050a00,
+                -120px 200px 0 10px #000;
+            animation: balanco-mato-dir 8s ease-in-out infinite;
         }
 
-        @keyframes balanco-dir {
-            0%, 100% { transform: scaleX(-1) rotate(12deg) translateY(0); }
-            50% { transform: scaleX(-1) rotate(16deg) translateY(-10px); }
+        @keyframes balanco-mato-esq {
+            0%, 100% { transform: rotate(15deg) skewY(0deg); }
+            50% { transform: rotate(18deg) skewY(2deg); }
+        }
+
+        @keyframes balanco-mato-dir {
+            0%, 100% { transform: rotate(-15deg) skewY(0deg); }
+            50% { transform: rotate(-20deg) skewY(-2deg); }
         }
 
         /* --- NUVENS --- */
@@ -192,8 +209,10 @@
 
     <canvas id="chuva"></canvas>
 
-    <div class="grama grama-esq"></div>
-    <div class="grama grama-dir"></div>
+    <div class="container-mato" id="mato-container">
+        <div class="mato mato-esq"></div>
+        <div class="mato mato-dir"></div>
+    </div>
 
     <div id="player-container"></div>
 
@@ -216,9 +235,9 @@
         const overlay = document.getElementById('overlay');
         const btn = document.getElementById('btn-entrar');
         const playerContainer = document.getElementById('player-container');
+        const matoContainer = document.getElementById('mato-container');
         const canvas = document.getElementById('chuva');
         const ctx = canvas.getContext('2d');
-        const gramas = document.querySelectorAll('.grama');
 
         let gotas = [];
         const numGotas = 120;
@@ -291,8 +310,8 @@
         btn.addEventListener('click', () => {
             overlay.style.opacity = '0';
             
-            // Aparecer a grama suavemente ao entrar
-            gramas.forEach(g => g.style.opacity = '1');
+            // Mostra o mato alto
+            matoContainer.style.opacity = '1';
 
             setTimeout(() => {
                 overlay.style.display = 'none';
