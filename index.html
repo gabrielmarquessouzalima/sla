@@ -81,61 +81,35 @@
             50% { transform: translateY(-15px) translateX(5px); }
         }
 
-        /* --- MATO ALTO (CSS PURO) --- */
-        .container-mato {
+        /* --- SISTEMA DE GRAMA DINÂMICA --- */
+        #container-grama {
             position: fixed;
-            bottom: -20px;
+            bottom: -10px;
+            left: 0;
             width: 100%;
-            height: 100%;
+            height: 250px;
             pointer-events: none;
             z-index: 200;
             opacity: 0;
             transition: opacity 2s ease;
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-around;
         }
 
-        .mato {
+        .grama-blade {
             position: absolute;
             bottom: 0;
-            width: 10px;
-            height: 350px;
-            background: #050a00; /* Verde bem escuro quase preto */
+            width: 6px;
+            background: linear-gradient(to top, #000 0%, #050a00 100%);
             border-radius: 50% 50% 0 0 / 100% 100% 0 0;
             filter: blur(1px);
+            transform-origin: bottom center;
         }
 
-        /* Lado Esquerdo */
-        .mato-esq {
-            left: -20px;
-            transform: rotate(15deg);
-            /* Sombra cria várias folhas de mato com um único elemento */
-            box-shadow: 
-                20px 50px 0 2px #050a00, 
-                50px 100px 0 5px #020500, 
-                80px 150px 0 2px #050a00,
-                120px 200px 0 10px #000;
-            animation: balanco-mato-esq 7s ease-in-out infinite;
-        }
-
-        /* Lado Direito */
-        .mato-dir {
-            right: -20px;
-            transform: rotate(-15deg);
-            box-shadow: 
-                -20px 50px 0 2px #050a00, 
-                -50px 100px 0 5px #020500, 
-                -80px 150px 0 2px #050a00,
-                -120px 200px 0 10px #000;
-            animation: balanco-mato-dir 8s ease-in-out infinite;
-        }
-
-        @keyframes balanco-mato-esq {
-            0%, 100% { transform: rotate(15deg) skewY(0deg); }
-            50% { transform: rotate(18deg) skewY(2deg); }
-        }
-
-        @keyframes balanco-mato-dir {
-            0%, 100% { transform: rotate(-15deg) skewY(0deg); }
-            50% { transform: rotate(-20deg) skewY(-2deg); }
+        @keyframes balanco-grama {
+            0%, 100% { transform: rotate(var(--rot-base)) skewX(0deg); }
+            50% { transform: rotate(var(--rot-move)) skewX(3deg); }
         }
 
         /* --- NUVENS --- */
@@ -209,10 +183,7 @@
 
     <canvas id="chuva"></canvas>
 
-    <div class="container-mato" id="mato-container">
-        <div class="mato mato-esq"></div>
-        <div class="mato mato-dir"></div>
-    </div>
+    <div id="container-grama"></div>
 
     <div id="player-container"></div>
 
@@ -235,10 +206,11 @@
         const overlay = document.getElementById('overlay');
         const btn = document.getElementById('btn-entrar');
         const playerContainer = document.getElementById('player-container');
-        const matoContainer = document.getElementById('mato-container');
+        const gramaContainer = document.getElementById('container-grama');
         const canvas = document.getElementById('chuva');
         const ctx = canvas.getContext('2d');
 
+        // Configuração da Chuva
         let gotas = [];
         const numGotas = 120;
 
@@ -246,7 +218,6 @@
             canvas.width = window.innerWidth;
             canvas.height = window.innerHeight;
         }
-
         window.addEventListener('resize', resize);
         resize();
 
@@ -292,6 +263,31 @@
             requestAnimationFrame(animarChuva);
         }
 
+        // --- NOVA FUNÇÃO PARA GERAR MUITA GRAMA ---
+        function gerarGrama() {
+            const quantidade = 80; // Ajuste aqui para mais ou menos mato
+            for (let i = 0; i < quantidade; i++) {
+                const blade = document.createElement('div');
+                blade.className = 'grama-blade';
+                
+                const altura = 150 + Math.random() * 200;
+                const posX = Math.random() * 105 - 2.5; // Espalha por toda a largura
+                const rotBase = -20 + Math.random() * 40; // Inclinação inicial
+                const delay = Math.random() * -5; // Delay aleatório na animação
+                const tempo = 5 + Math.random() * 5; // Velocidade do balanço
+
+                blade.style.height = `${altura}px`;
+                blade.style.left = `${posX}%`;
+                blade.style.setProperty('--rot-base', `${rotBase}deg`);
+                blade.style.setProperty('--rot-move', `${rotBase + 10}deg`);
+                blade.style.animation = `balanco-grama ${tempo}s ease-in-out infinite`;
+                blade.style.animationDelay = `${delay}s`;
+                blade.style.zIndex = altura > 250 ? "201" : "199"; // Gramas maiores ficam na frente
+
+                gramaContainer.appendChild(blade);
+            }
+        }
+
         function criarNuvens() {
             const quantidade = 15; 
             for (let i = 0; i < quantidade; i++) {
@@ -307,11 +303,13 @@
             }
         }
 
+        // Evento de Início
         btn.addEventListener('click', () => {
             overlay.style.opacity = '0';
             
-            // Mostra o mato alto
-            matoContainer.style.opacity = '1';
+            // Inicia os elementos visuais
+            gerarGrama();
+            gramaContainer.style.opacity = '1';
 
             setTimeout(() => {
                 overlay.style.display = 'none';
