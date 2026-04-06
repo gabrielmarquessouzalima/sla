@@ -81,7 +81,7 @@
             50% { transform: translateY(-15px) translateX(5px); }
         }
 
-        /* --- SISTEMA DE GRAMA NAS LATERAIS (Mato Alto) --- */
+        /* --- SISTEMA DE GRAMA ESPALHADA --- */
         #container-grama {
             position: fixed;
             top: 0;
@@ -96,17 +96,17 @@
 
         .grama-blade {
             position: absolute;
-            bottom: -50px;
-            width: 10px;
-            background: linear-gradient(to top, #000 0%, #0a1500 50%, #152500 100%);
-            border-radius: 50% 50% 0 0 / 100% 100% 0 0;
-            filter: blur(2px); /* Efeito de profundidade/foco */
+            bottom: -80px;
+            width: 8px;
+            /* Gradiente mais suave para a grama */
+            background: linear-gradient(to top, #000 0%, #081200 40%, #101d00 100%);
+            border-radius: 40% 40% 0 0 / 100% 100% 0 0;
             transform-origin: bottom center;
         }
 
         @keyframes balanco-suave {
             0%, 100% { transform: rotate(var(--rot-base)) scaleY(1); }
-            50% { transform: rotate(var(--rot-move)) scaleY(1.05); }
+            50% { transform: rotate(var(--rot-move)) scaleY(1.03); }
         }
 
         /* --- NUVENS --- */
@@ -260,40 +260,42 @@
             requestAnimationFrame(animarChuva);
         }
 
-        // --- FUNÇÃO PARA GERAR MATO ALTO NAS LATERAIS ---
+        // --- FUNÇÃO PARA GRAMA ESPALHADA E SUTIL ---
         function gerarGrama() {
-            const quantidadePorLado = 60; 
+            const totalFolhas = 25; // Quantidade bem menor para não encher a tela
             
-            for (let i = 0; i < quantidadePorLado * 2; i++) {
+            for (let i = 0; i < totalFolhas; i++) {
                 const blade = document.createElement('div');
                 blade.className = 'grama-blade';
                 
-                const ladoEsquerdo = i < quantidadePorLado;
+                // Distribui aleatoriamente: metade na esquerda, metade na direita
+                const ladoEsquerdo = i % 2 === 0;
                 
-                // Posiciona nas faixas laterais (0-15% ou 85-100%)
-                const posX = ladoEsquerdo ? (Math.random() * 18) : (82 + Math.random() * 18);
+                // posX bem nas beiradas, mas com variação para não ficarem grudadas
+                const posX = ladoEsquerdo ? (Math.random() * 12) : (88 + Math.random() * 12);
                 
-                // Altura grande para simular proximidade
-                const altura = window.innerHeight * (0.5 + Math.random() * 0.6);
+                // Alturas variadas para quebrar a simetria
+                const altura = window.innerHeight * (0.4 + Math.random() * 0.5);
                 
-                // Inclinação para o centro
-                const inclinacaoBase = ladoEsquerdo ? (15 + Math.random() * 35) : (-15 - Math.random() * 35);
+                // Inclinação sutil para o centro
+                const inclinacaoBase = ladoEsquerdo ? (10 + Math.random() * 25) : (-10 - Math.random() * 25);
                 
-                const delay = Math.random() * -10;
-                const tempo = 4 + Math.random() * 5;
+                const delay = Math.random() * -15;
+                const tempo = 5 + Math.random() * 5;
 
                 blade.style.height = `${altura}px`;
                 blade.style.left = `${posX}%`;
-                blade.style.width = `${8 + Math.random() * 12}px`; 
+                blade.style.width = `${5 + Math.random() * 10}px`; 
                 
                 blade.style.setProperty('--rot-base', `${inclinacaoBase}deg`);
-                blade.style.setProperty('--rot-move', `${inclinacaoBase + (ladoEsquerdo ? 5 : -5)}deg`);
+                blade.style.setProperty('--rot-move', `${inclinacaoBase + (ladoEsquerdo ? 3 : -3)}deg`);
                 
                 blade.style.animation = `balanco-suave ${tempo}s ease-in-out infinite`;
                 blade.style.animationDelay = `${delay}s`;
                 
-                // Desfoque variável para profundidade
-                blade.style.filter = `blur(${1 + Math.random() * 3}px)`;
+                // Opacidade e blur aleatórios para parecer mato esparso
+                blade.style.opacity = 0.5 + Math.random() * 0.5;
+                blade.style.filter = `blur(${Math.random() * 4}px)`;
 
                 gramaContainer.appendChild(blade);
             }
