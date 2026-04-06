@@ -81,35 +81,32 @@
             50% { transform: translateY(-15px) translateX(5px); }
         }
 
-        /* --- SISTEMA DE GRAMA DINÂMICA --- */
+        /* --- SISTEMA DE GRAMA NAS LATERAIS (Mato Alto) --- */
         #container-grama {
             position: fixed;
-            bottom: -10px;
+            top: 0;
             left: 0;
             width: 100%;
-            height: 250px;
+            height: 100%;
             pointer-events: none;
             z-index: 200;
             opacity: 0;
             transition: opacity 2s ease;
-            display: flex;
-            align-items: flex-end;
-            justify-content: space-around;
         }
 
         .grama-blade {
             position: absolute;
-            bottom: 0;
-            width: 6px;
-            background: linear-gradient(to top, #000 0%, #050a00 100%);
+            bottom: -50px;
+            width: 10px;
+            background: linear-gradient(to top, #000 0%, #0a1500 50%, #152500 100%);
             border-radius: 50% 50% 0 0 / 100% 100% 0 0;
-            filter: blur(1px);
+            filter: blur(2px); /* Efeito de profundidade/foco */
             transform-origin: bottom center;
         }
 
-        @keyframes balanco-grama {
-            0%, 100% { transform: rotate(var(--rot-base)) skewX(0deg); }
-            50% { transform: rotate(var(--rot-move)) skewX(3deg); }
+        @keyframes balanco-suave {
+            0%, 100% { transform: rotate(var(--rot-base)) scaleY(1); }
+            50% { transform: rotate(var(--rot-move)) scaleY(1.05); }
         }
 
         /* --- NUVENS --- */
@@ -263,26 +260,40 @@
             requestAnimationFrame(animarChuva);
         }
 
-        // --- NOVA FUNÇÃO PARA GERAR MUITA GRAMA ---
+        // --- FUNÇÃO PARA GERAR MATO ALTO NAS LATERAIS ---
         function gerarGrama() {
-            const quantidade = 80; // Ajuste aqui para mais ou menos mato
-            for (let i = 0; i < quantidade; i++) {
+            const quantidadePorLado = 60; 
+            
+            for (let i = 0; i < quantidadePorLado * 2; i++) {
                 const blade = document.createElement('div');
                 blade.className = 'grama-blade';
                 
-                const altura = 150 + Math.random() * 200;
-                const posX = Math.random() * 105 - 2.5; // Espalha por toda a largura
-                const rotBase = -20 + Math.random() * 40; // Inclinação inicial
-                const delay = Math.random() * -5; // Delay aleatório na animação
-                const tempo = 5 + Math.random() * 5; // Velocidade do balanço
+                const ladoEsquerdo = i < quantidadePorLado;
+                
+                // Posiciona nas faixas laterais (0-15% ou 85-100%)
+                const posX = ladoEsquerdo ? (Math.random() * 18) : (82 + Math.random() * 18);
+                
+                // Altura grande para simular proximidade
+                const altura = window.innerHeight * (0.5 + Math.random() * 0.6);
+                
+                // Inclinação para o centro
+                const inclinacaoBase = ladoEsquerdo ? (15 + Math.random() * 35) : (-15 - Math.random() * 35);
+                
+                const delay = Math.random() * -10;
+                const tempo = 4 + Math.random() * 5;
 
                 blade.style.height = `${altura}px`;
                 blade.style.left = `${posX}%`;
-                blade.style.setProperty('--rot-base', `${rotBase}deg`);
-                blade.style.setProperty('--rot-move', `${rotBase + 10}deg`);
-                blade.style.animation = `balanco-grama ${tempo}s ease-in-out infinite`;
+                blade.style.width = `${8 + Math.random() * 12}px`; 
+                
+                blade.style.setProperty('--rot-base', `${inclinacaoBase}deg`);
+                blade.style.setProperty('--rot-move', `${inclinacaoBase + (ladoEsquerdo ? 5 : -5)}deg`);
+                
+                blade.style.animation = `balanco-suave ${tempo}s ease-in-out infinite`;
                 blade.style.animationDelay = `${delay}s`;
-                blade.style.zIndex = altura > 250 ? "201" : "199"; // Gramas maiores ficam na frente
+                
+                // Desfoque variável para profundidade
+                blade.style.filter = `blur(${1 + Math.random() * 3}px)`;
 
                 gramaContainer.appendChild(blade);
             }
@@ -307,7 +318,6 @@
         btn.addEventListener('click', () => {
             overlay.style.opacity = '0';
             
-            // Inicia os elementos visuais
             gerarGrama();
             gramaContainer.style.opacity = '1';
 
