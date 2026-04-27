@@ -5,29 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Espaço do Gabriel</title>
     <style>
-        /* Reset e Base */
-        body {
-            margin: 0;
-            padding: 0;
-            background: 
-                radial-gradient(1px 1px at 20px 30px, white, rgba(0,0,0,0)),
-                radial-gradient(1px 1px at 40px 70px, white, rgba(0,0,0,0)),
-                radial-gradient(2px 2px at 50px 160px, white, rgba(0,0,0,0)),
-                linear-gradient(to bottom, rgb(0, 10, 80), #1a002e);
-            background-size: 200px 200px, 200px 200px, 200px 200px, 100% 100%;
-            background-attachment: fixed;
-            display: flex;
-            flex-direction: column;
-            align-items: center;
-            justify-content: center;
-            min-height: 100vh;
-            font-family: 'Courier New', Courier, monospace;
-            color: white;
-            overflow: hidden; /* Evita barras de rolagem */
-            position: relative;
-        }
-
-        /* Tela de Entrada */
+        /* Estilos da Tela de Entrada (Overlay) */
         #overlay {
             position: fixed;
             top: 0;
@@ -36,10 +14,11 @@
             height: 100%;
             background: black;
             display: flex;
+            flex-direction: column;
             align-items: center;
             justify-content: center;
-            z-index: 9999;
-            transition: opacity 1s ease, visibility 1s;
+            z-index: 1000;
+            transition: opacity 1s ease;
         }
 
         #btn-entrar {
@@ -49,9 +28,9 @@
             color: white;
             border: 2px solid white;
             cursor: pointer;
+            font-family: 'Courier New', Courier, monospace;
             border-radius: 5px;
             box-shadow: 0 0 15px rgba(255, 255, 255, 0.2);
-            transition: 0.3s;
         }
 
         #btn-entrar:hover {
@@ -59,17 +38,18 @@
             color: black;
         }
 
-        /* Elementos Visuais */
+        /* Estilo do Canvas de Chuva */
         #chuva {
             position: fixed;
             top: 0;
             left: 0;
             width: 100%;
             height: 100%;
-            z-index: 2; 
+            z-index: 3; 
             pointer-events: none;
         }
 
+        /* --- LUA --- */
         .lua {
             position: absolute;
             top: 5%; 
@@ -84,13 +64,14 @@
             transform: rotate(15deg);
         }
 
+        /* --- RAYQUAZA --- */
         .rayquaza-fundo {
             position: absolute;
             top: 8%;
             right: 18%;
             width: 70px;
             opacity: 0.6; 
-            z-index: 1; 
+            z-index: 2; 
             filter: blur(0.5px);
             animation: flutuar 4s ease-in-out infinite;
         }
@@ -100,23 +81,24 @@
             50% { transform: translateY(-15px) translateX(5px); }
         }
 
-        /* Grama */
+        /* --- SISTEMA DE GRAMA ESPALHADA --- */
         #container-grama {
             position: fixed;
-            bottom: 0;
+            top: 0;
             left: 0;
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 10;
+            z-index: 200;
             opacity: 0;
             transition: opacity 2s ease;
         }
 
         .grama-blade {
             position: absolute;
-            bottom: -10px;
+            bottom: -80px;
             width: 8px;
+            /* Gradiente mais suave para a grama */
             background: linear-gradient(to top, #000 0%, #081200 40%, #101d00 100%);
             border-radius: 40% 40% 0 0 / 100% 100% 0 0;
             transform-origin: bottom center;
@@ -124,39 +106,70 @@
 
         @keyframes balanco-suave {
             0%, 100% { transform: rotate(var(--rot-base)) scaleY(1); }
-            50% { transform: rotate(var(--rot-move)) scaleY(1.05); }
+            50% { transform: rotate(var(--rot-move)) scaleY(1.03); }
         }
 
-        /* Nuvens */
+        /* --- NUVENS --- */
         .nuvem {
             position: absolute;
             width: 150px;
             height: 50px;
-            background: rgba(60, 70, 100, 0.3); 
+            background: rgba(60, 70, 100, 0.55); 
             border-radius: 100px;
-            filter: blur(30px); 
+            filter: blur(22px); 
             z-index: 0;
             pointer-events: none;
         }
 
-        /* Conteúdo Central */
-        .mimikyu-topo { width: 80px; z-index: 5; margin-bottom: -10px; }
-        .meu-gif {
-            width: 300px;
-            border-radius: 10px;
-            box-shadow: 0 0 20px rgba(255, 255, 255, 0.2);
+        /* Fundo Estrelado */
+        body {
+            background: 
+                radial-gradient(1px 1px at 20px 30px, white, rgba(0,0,0,0)),
+                radial-gradient(1px 1px at 40px 70px, white, rgba(0,0,0,0)),
+                radial-gradient(2px 2px at 50px 160px, white, rgba(0,0,0,0)),
+                linear-gradient(to bottom, rgb(0, 10, 80), #1a002e);
+            background-size: 200px 200px, 200px 200px, 200px 200px, 100% 100%;
+            background-attachment: fixed;
+            margin: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+            font-family: sans-serif;
+            color: white;
+            overflow: hidden; 
+            position: relative;
+        }
+
+        .mimikyu-topo {
+            width: 80px; 
+            margin-left: 120px; 
+            margin-bottom: -25px; 
             z-index: 5;
         }
 
-        h1 { z-index: 5; text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8); margin: 10px 0; }
+        .meu-gif {
+            width: 300px;
+            border-radius: 10px;
+            margin-top: 20px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, 0.3);
+            z-index: 5;
+        }
+
+        h1 {
+            z-index: 5;
+            text-shadow: 2px 2px 10px rgba(0, 0, 0, 0.8);
+        }
+
         .texto-vermelho {
             color: #ff3333;
-            font-size: 45px;
+            font-size: 50px;
             text-transform: uppercase;
             text-shadow: 0 0 15px rgba(255, 0, 0, 0.7);
         }
 
-        #player-container { display: none; }
+        iframe { display: none; }
     </style>
 </head>
 <body>
@@ -166,8 +179,11 @@
     </div>
 
     <canvas id="chuva"></canvas>
+
     <div id="container-grama"></div>
+
     <div id="player-container"></div>
+
     <div class="lua"></div>
 
     <img src="https://raw.githubusercontent.com/PokeAPI/sprites/master/sprites/pokemon/versions/generation-v/black-white/animated/384.gif" 
@@ -193,7 +209,7 @@
 
         // Configuração da Chuva
         let gotas = [];
-        const numGotas = 100;
+        const numGotas = 120;
 
         function resize() {
             canvas.width = window.innerWidth;
@@ -204,10 +220,10 @@
 
         function criarGota() {
             return {
-                x: Math.random() * canvas.width,
-                y: Math.random() * canvas.height,
+                x: Math.random() * canvas.width - canvas.width / 2,
+                y: Math.random() * canvas.height - canvas.height / 2,
                 z: Math.random() * 1000,
-                velocidade: 15 + Math.random() * 5
+                velocidade: 18
             };
         }
 
@@ -217,54 +233,85 @@
 
         function animarChuva() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
-            
+            const centroX = canvas.width / 2;
+            const centroY = canvas.height / 2;
+
             gotas.forEach(g => {
-                g.y += g.velocidade;
-                if (g.y > canvas.height) {
-                    g.y = -20;
-                    g.x = Math.random() * canvas.width;
+                g.z -= g.velocidade;
+                if (g.z <= 0) {
+                    g.z = 1000;
+                    g.x = Math.random() * canvas.width - canvas.width / 2;
+                    g.y = Math.random() * canvas.height - canvas.height / 2;
                 }
+                const escala = 400 / (400 + g.z);
+                const x2d = g.x * escala + centroX;
+                const y2d = g.y * escala + centroY;
+                const tamanho = escala * 3;
+                const opacidade = (1 - g.z / 1000);
 
                 ctx.beginPath();
-                ctx.strokeStyle = 'rgba(180, 200, 255, 0.4)';
-                ctx.lineWidth = 1.5;
+                ctx.strokeStyle = `rgba(180, 200, 255, ${opacidade * 0.6})`;
+                ctx.lineWidth = tamanho;
                 ctx.lineCap = 'round';
-                ctx.moveTo(g.x, g.y);
-                ctx.lineTo(g.x, g.y + 15);
+                ctx.moveTo(x2d, y2d);
+                ctx.lineTo(x2d + (g.x * escala * 0.05), y2d + (g.y * escala * 0.05));
                 ctx.stroke();
             });
             requestAnimationFrame(animarChuva);
         }
 
-        function gerarGama() {
-            const totalFolhas = 30;
+        // --- FUNÇÃO PARA GRAMA ESPALHADA E SUTIL ---
+        function gerarGrama() {
+            const totalFolhas = 25; // Quantidade bem menor para não encher a tela
+            
             for (let i = 0; i < totalFolhas; i++) {
                 const blade = document.createElement('div');
                 blade.className = 'grama-blade';
-                const ladoEsquerdo = i % 2 === 0;
-                const posX = ladoEsquerdo ? (Math.random() * 15) : (85 + Math.random() * 15);
-                const altura = window.innerHeight * (0.3 + Math.random() * 0.4);
-                const inclinacaoBase = ladoEsquerdo ? (15 + Math.random() * 20) : (-15 - Math.random() * 20);
                 
+                // Distribui aleatoriamente: metade na esquerda, metade na direita
+                const ladoEsquerdo = i % 2 === 0;
+                
+                // posX bem nas beiradas, mas com variação para não ficarem grudadas
+                const posX = ladoEsquerdo ? (Math.random() * 12) : (88 + Math.random() * 12);
+                
+                // Alturas variadas para quebrar a simetria
+                const altura = window.innerHeight * (0.4 + Math.random() * 0.5);
+                
+                // Inclinação sutil para o centro
+                const inclinacaoBase = ladoEsquerdo ? (10 + Math.random() * 25) : (-10 - Math.random() * 25);
+                
+                const delay = Math.random() * -15;
+                const tempo = 5 + Math.random() * 5;
+
                 blade.style.height = `${altura}px`;
                 blade.style.left = `${posX}%`;
-                blade.style.width = `${6 + Math.random() * 8}px`; 
+                blade.style.width = `${5 + Math.random() * 10}px`; 
+                
                 blade.style.setProperty('--rot-base', `${inclinacaoBase}deg`);
-                blade.style.setProperty('--rot-move', `${inclinacaoBase + (ladoEsquerdo ? 5 : -5)}deg`);
-                blade.style.animation = `balanco-suave ${4 + Math.random() * 3}s ease-in-out infinite`;
-                blade.style.filter = `blur(${Math.random() * 2}px)`;
+                blade.style.setProperty('--rot-move', `${inclinacaoBase + (ladoEsquerdo ? 3 : -3)}deg`);
+                
+                blade.style.animation = `balanco-suave ${tempo}s ease-in-out infinite`;
+                blade.style.animationDelay = `${delay}s`;
+                
+                // Opacidade e blur aleatórios para parecer mato esparso
+                blade.style.opacity = 0.5 + Math.random() * 0.5;
+                blade.style.filter = `blur(${Math.random() * 4}px)`;
 
                 gramaContainer.appendChild(blade);
             }
         }
 
         function criarNuvens() {
-            for (let i = 0; i < 12; i++) {
+            const quantidade = 15; 
+            for (let i = 0; i < quantidade; i++) {
                 const nuvem = document.createElement('div');
                 nuvem.className = 'nuvem';
-                nuvem.style.top = Math.random() * 100 + 'vh';
-                nuvem.style.left = Math.random() * 100 + 'vw'; 
-                nuvem.style.transform = `scale(${1 + Math.random() * 2})`;
+                let x = Math.random() * 100;
+                let y = Math.random() * 100;
+                const escala = 1.5 + Math.random() * 2; 
+                nuvem.style.top = y + 'vh';
+                nuvem.style.left = x + 'vw'; 
+                nuvem.style.transform = `scale(${escala})`;
                 document.body.appendChild(nuvem);
             }
         }
@@ -272,14 +319,16 @@
         // Evento de Início
         btn.addEventListener('click', () => {
             overlay.style.opacity = '0';
-            overlay.style.visibility = 'hidden';
             
-            gerarGama();
+            gerarGrama();
             gramaContainer.style.opacity = '1';
-            animarChuva();
-            criarNuvens(); 
 
-            // Iframe de música (YouTube costuma bloquear autoplay sem mute, mas o clique ajuda)
+            setTimeout(() => {
+                overlay.style.display = 'none';
+                animarChuva();
+                criarNuvens(); 
+            }, 1000);
+
             playerContainer.innerHTML = `
                 <iframe 
                     src="https://www.youtube.com/embed/iymkhH754bo?autoplay=1&loop=1&playlist=iymkhH754bo" 
@@ -287,5 +336,6 @@
                 </iframe>`;
         });
     </script>
+
 </body>
 </html>
