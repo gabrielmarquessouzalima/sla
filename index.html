@@ -81,7 +81,7 @@
             50% { transform: translateY(-15px) translateX(5px); }
         }
 
-        /* --- SISTEMA DE GRAMA ESPALHADA --- */
+        /* --- SISTEMA DE GRAMA (VISÃO DE DEITADO) --- */
         #container-grama {
             position: fixed;
             top: 0;
@@ -89,24 +89,22 @@
             width: 100%;
             height: 100%;
             pointer-events: none;
-            z-index: 200;
+            z-index: 200; /* Fica na frente dos textos e imagens */
             opacity: 0;
             transition: opacity 2s ease;
         }
 
         .grama-blade {
             position: absolute;
-            bottom: -80px;
-            width: 8px;
-            /* Gradiente mais suave para a grama */
-            background: linear-gradient(to top, #000 0%, #081200 40%, #101d00 100%);
-            border-radius: 40% 40% 0 0 / 100% 100% 0 0;
+            /* Gradiente escuro para simular sombra/proximidade */
+            background: linear-gradient(to top, #000 0%, #050a00 50%, #1a2e00 100%);
+            border-radius: 50% 50% 0 0 / 100% 100% 0 0;
             transform-origin: bottom center;
         }
 
         @keyframes balanco-suave {
             0%, 100% { transform: rotate(var(--rot-base)) scaleY(1); }
-            50% { transform: rotate(var(--rot-move)) scaleY(1.03); }
+            50% { transform: rotate(var(--rot-move)) scaleY(1.05); }
         }
 
         /* --- NUVENS --- */
@@ -260,42 +258,57 @@
             requestAnimationFrame(animarChuva);
         }
 
-        // --- FUNÇÃO PARA GRAMA ESPALHADA E SUTIL ---
+        // --- FUNÇÃO PARA GRAMA COM PERSPECTIVA DE QUEM ESTÁ DEITADO ---
         function gerarGrama() {
-            const totalFolhas = 25; // Quantidade bem menor para não encher a tela
+            const totalFolhas = 70; // Quantidade para criar uma moldura orgânica
             
             for (let i = 0; i < totalFolhas; i++) {
                 const blade = document.createElement('div');
                 blade.className = 'grama-blade';
                 
-                // Distribui aleatoriamente: metade na esquerda, metade na direita
-                const ladoEsquerdo = i % 2 === 0;
+                const sorteio = Math.random();
+                let posX, posY, inclinacaoBase;
+
+                // Distribui folhas pela base e laterais para fechar a visão
+                if (sorteio < 0.6) { 
+                    posX = Math.random() * 100;
+                    posY = 100;
+                    inclinacaoBase = (posX < 50) ? (Math.random() * 25) : (Math.random() * -25);
+                } else if (sorteio < 0.8) {
+                    posX = 0;
+                    posY = Math.random() * 100;
+                    inclinacaoBase = 45 + Math.random() * 45;
+                } else {
+                    posX = 100;
+                    posY = Math.random() * 100;
+                    inclinacaoBase = -45 - Math.random() * 45;
+                }
                 
-                // posX bem nas beiradas, mas com variação para não ficarem grudadas
-                const posX = ladoEsquerdo ? (Math.random() * 12) : (88 + Math.random() * 12);
+                // Alturas grandes para parecer que estão "em cima" da câmera
+                const altura = window.innerHeight * (0.6 + Math.random() * 0.8);
+                const largura = 15 + Math.random() * 35;
                 
-                // Alturas variadas para quebrar a simetria
-                const altura = window.innerHeight * (0.4 + Math.random() * 0.5);
-                
-                // Inclinação sutil para o centro
-                const inclinacaoBase = ladoEsquerdo ? (10 + Math.random() * 25) : (-10 - Math.random() * 25);
-                
-                const delay = Math.random() * -15;
-                const tempo = 5 + Math.random() * 5;
+                const delay = Math.random() * -20;
+                const tempo = 4 + Math.random() * 5;
 
                 blade.style.height = `${altura}px`;
+                blade.style.width = `${largura}px`;
                 blade.style.left = `${posX}%`;
-                blade.style.width = `${5 + Math.random() * 10}px`; 
+                blade.style.top = `${posY}%`;
                 
+                if (posX === 0) blade.style.transformOrigin = "bottom left";
+                if (posX === 100) blade.style.transformOrigin = "bottom right";
+
                 blade.style.setProperty('--rot-base', `${inclinacaoBase}deg`);
-                blade.style.setProperty('--rot-move', `${inclinacaoBase + (ladoEsquerdo ? 3 : -3)}deg`);
+                blade.style.setProperty('--rot-move', `${inclinacaoBase + (Math.random() > 0.5 ? 6 : -6)}deg`);
                 
                 blade.style.animation = `balanco-suave ${tempo}s ease-in-out infinite`;
                 blade.style.animationDelay = `${delay}s`;
                 
-                // Opacidade e blur aleatórios para parecer mato esparso
-                blade.style.opacity = 0.5 + Math.random() * 0.5;
-                blade.style.filter = `blur(${Math.random() * 4}px)`;
+                // Efeito de profundidade: folhas maiores ficam mais desfocadas (perto do olho)
+                const blurValue = (altura / window.innerHeight) * 6;
+                blade.style.filter = `blur(${blurValue}px)`;
+                blade.style.opacity = 0.3 + Math.random() * 0.6;
 
                 gramaContainer.appendChild(blade);
             }
